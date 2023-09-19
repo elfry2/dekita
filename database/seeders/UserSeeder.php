@@ -17,7 +17,8 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'email' => 'admin@localhost',
-                'password' => 'admin@localhost'
+                'password' => 'admin@localhost',
+                'role_id' => 1
             ],
         ];
 
