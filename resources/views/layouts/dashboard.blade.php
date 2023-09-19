@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ preference('lang', 'en') }}" data-bs-theme="{{ preference('theme', 'light') }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
     <link href="/css/stylesheet.css" rel="stylesheet">
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
             <div class="col-sm-3">
                 @yield('sidenav')

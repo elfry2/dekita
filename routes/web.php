@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PreferenceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     // return view('welcome');
-    return view('tasks.index');
-});
+    return view('home.index');
+})->name('home.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
+    // return redirect(route('tasks.index'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -30,3 +32,10 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::post('/preference', [PreferenceController::class, 'store'])->name('preference.store');
+
+Route::middleware('auth')->group(function () {
+    Route::resource('folders', FolderController::class);
+    Route::resource('tasks', TaskController::class);
+});
