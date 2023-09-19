@@ -13,25 +13,28 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="mt-5">
-            <h1>{{ config('app.name') }}</h1>
-            <div class="d-flex">
-                <a href="{{ route('dashboard') }}" class="btn btn-primary">{{ Auth::id() ? 'My tasks' : 'Log in' }}</a>
-                @auth
-                @else
-                    <a href="{{ route('register') }}" class="btn">Register</a>
-                @endauth
-                <form action="{{ route('preference.store') }}" method="post">
-                    @csrf
-                    {{-- <input type="hidden" name="redirectTo" value="{{ url()->current() }}"> --}}
-                    <input type="hidden" name="key" value="theme">
-                    <button type="submit" name="value"
-                        value="{{ preference('theme', 'light') == 'light' ? 'dark' : 'light' }}" class="btn"><i
-                            class="bi-{{ preference('theme', 'light') == 'light' ? 'moon' : 'sun' }}"></i></button>
-                </form>
-            </div>
+    <div class="container mt-5">
+        <div class="d-flex align-items-center">
+            <h1 class="m-0">{{ config('app.name') }}</h1>
+            <a href="{{ route('dashboard') }}" class="ms-3 btn">{{ Auth::id() ? 'My tasks' : 'Log in' }}</a>
+            @auth
+            @else
+                <a href="{{ route('register') }}" class="btn">Register</a>
+            @endauth
+            <form action="{{ route('preference.store') }}" method="post">
+                @csrf
+                {{-- <input type="hidden" name="redirectTo" value="{{ url()->current() }}"> --}}
+                <input type="hidden" name="key" value="theme">
+                <button type="submit" name="value"
+                    value="{{ preference('theme', 'light') == 'light' ? 'dark' : 'light' }}" class="btn"><i
+                        class="bi-{{ preference('theme', 'light') == 'light' ? 'moon' : 'sun' }}"></i></button>
+            </form>
         </div>
+        <p class="mt-5">Featuring SimpleMDE!</p>
+        <div class="card border-0 bg-light"><textarea></textarea></div>
+        <script>
+            var simplemde = new SimpleMDE();
+        </script>
     </div>
     <script src="/packages/bootstrap-5.3.1-dist/js/bootstrap.bundle.min.js"></script>
 </body>
