@@ -4,7 +4,7 @@
 <form class="d-flex" role="search">
   <div class="input-group flex-nowrap hide-on-small-screens">
       <input class="form-control border-secondary border-end-0" type="search"
-          placeholder="Search" aria-label="Search">
+          placeholder="Search" aria-label="Search" autofocus>
       <button class="btn border-secondary border-start-0" type="submit"><i
               class="bi-search"></i></button>
   </div>

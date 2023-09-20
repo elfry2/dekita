@@ -1,27 +1,12 @@
-<!doctype html>
-<html lang="{{ preference('lang', 'en') }}" data-bs-theme="{{ preference('theme', 'light') }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ (isset($title) ? "$title | " : '') . config('app.name') }}</title>
-    <link href="/packages/bootstrap-5.3.1-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/packages/bootstrap-icons-1.11.0/bootstrap-icons.css" rel="stylesheet">
-    <link href="/packages/sparksuite-simplemde-markdown-editor-6abda7a/dist/simplemde.min.css" rel="stylesheet">
-    <script src="/packages/sparksuite-simplemde-markdown-editor-6abda7a/dist/simplemde.min.js"></script>
-    <link href="/css/stylesheet.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container-fluid h-100">
-        <div class="row h-100">
-            <div class="col-sm-2 h-100 position-sticky d-{{ preference('nav.display') }}" id="nav">
-                <div class="d-flex align-items-center mt-2">
-                    <h3>{{ config('app.name') }}</h3>
-                    <div class="btn invisible"><i class="bi-moon"></i></div>
+<div class="row m-0 h-100 overflow-auto">
+            <div class="col-sm-2 p-0 h-100 mt-2 mx-2 d-{{ preference('nav.display', 'block') }}" id="nav">
+                <div class="d-flex align-items-center">
+                    <h3 class="m-0">{{ config('app.name') }}</h3>
+                    <button class="btn invisible"><i class="bi-moon"></i></button>
                 </div>
                 <div class="mt-3">
                     <div class="d-flex align-items-center">
-                        <b>Folders</b>
+                        <b class="m-0">Folders</b>
                         <a href="{{ route('folders.create') }}" class="ms-auto text-dark"><i class="bi-plus-lg"></i></a>
                     </div>
                     <div class="list-group">
@@ -64,8 +49,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm" id="content">
-                <div class="mt-2 d-flex align-items-center position-sticky" id="actions">
+            <div class="col-sm p-0 h-100" id="page">
+                <div class="d-flex align-items-center mt-2 mx-2 overflow-auto" id="actions">
                     <form action="{{ route('preference.store') }}" method="post">
                         @csrf
                         {{-- <input type="hidden" name="redirectTo" value="{{ url()->current() }}"> --}}
@@ -77,13 +62,8 @@
                     <h3 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h3>
                     @yield('actions')
                 </div>
-                <div class="mt-2" id="content">
-                    @yield('content')
+                <div class="mt-2 mx-2" id="content">
+                  @yield('content')
                 </div>
             </div>
         </div>
-    </div>
-    <script src="/packages/bootstrap-5.3.1-dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
