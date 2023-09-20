@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PreferenceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,3 +40,18 @@ Route::middleware('auth')->group(function () {
     Route::resource('folders', FolderController::class);
     Route::resource('tasks', TaskController::class);
 });
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('users', RegisteredUserController::class)->only([
+        'index',
+        'show',
+        'edit',
+        'update',
+        'destroy'
+    ]);
+});
+
+Route::get('register', [RegisteredUserController::class, 'create'])
+                ->name('register');
+
+Route::post('register', [RegisteredUserController::class, 'store']);

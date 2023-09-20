@@ -20,6 +20,12 @@ class UserSeeder extends Seeder
                 'password' => 'admin@localhost',
                 'role_id' => 1
             ],
+            [
+                'name' => 'User',
+                'email' => 'user@localhost',
+                'password' => 'user@localhost',
+                'role_id' => 2
+            ],
         ];
 
         foreach($users as $user) {
