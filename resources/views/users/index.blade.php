@@ -10,7 +10,7 @@
   </div>
 </form>
 @endif
-<a href="#" class="btn ms-2"><i class="bi-search"></i></a>
+<a href="#" class="btn ms-2 hide-on-big-screens"><i class="bi-search"></i></a>
 <a href="{{ route('register') }}" class="btn ms-2"><i
         class="bi-plus-lg"></i><span class="ms-2 hide-on-small-screens">New</span></a>
 <a href="{{ route(Str::lower($title) . '.index', ['page' => 0]) }}" class="btn ms-2"><i class="bi-chevron-left"></i></a>
@@ -41,6 +41,67 @@
                 <td>{{ $user->suspended_until }}</td>
             </tr>
         @endforeach
+        @foreach ($users as $user)
+            <tr>
+                <td>{{ $loop->index+1 }}</td>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->role->name }}</td>
+                <td>{{ $user->suspended_until }}</td>
+            </tr>
+        @endforeach
+        @foreach ($users as $user)
+            <tr>
+                <td>{{ $loop->index+1 }}</td>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->role->name }}</td>
+                <td>{{ $user->suspended_until }}</td>
+            </tr>
+        @endforeach
+        @foreach ($users as $user)
+            <tr>
+                <td>{{ $loop->index+1 }}</td>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->role->name }}</td>
+                <td>{{ $user->suspended_until }}</td>
+            </tr>
+        @endforeach
+        @foreach ($users as $user)
+            <tr>
+                <td>{{ $loop->index+1 }}</td>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->role->name }}</td>
+                <td>{{ $user->suspended_until }}</td>
+            </tr>
+        @endforeach
+        @foreach ($users as $user)
+            <tr>
+                <td>{{ $loop->index+1 }}</td>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->role->name }}</td>
+                <td>{{ $user->suspended_until }}</td>
+            </tr>
+        @endforeach
+        @foreach ($users as $user)
+            <tr>
+                <td>{{ $loop->index+1 }}</td>
+                <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->role->name }}</td>
+                <td>{{ $user->suspended_until }}</td>
+            </tr>
+        @endforeach
+        
     </table>
 </div>
 @endif
