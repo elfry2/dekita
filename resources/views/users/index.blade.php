@@ -2,7 +2,7 @@
 @section('actions')
 @if ($users->count() > 0)
 <form class="d-flex" role="search">
-  <div class="input-group">
+  <div class="input-group flex-nowrap hide-on-small-screens">
       <input class="form-control border-secondary border-end-0" type="search"
           placeholder="Search" aria-label="Search">
       <button class="btn border-secondary border-start-0" type="submit"><i
@@ -11,7 +11,7 @@
 </form>
 @endif
 <a href="{{ route('register') }}" class="btn ms-2"><i
-        class="bi-plus-lg"></i><span class="ms-2">New</span></a>
+        class="bi-plus-lg"></i><span class="ms-2 hide-on-small-screens">New</span></a>
 <a href="{{ route(Str::lower($title) . '.index', ['page' => 0]) }}" class="btn ms-2"><i class="bi-chevron-left"></i></a>
 <a href="{{ route(Str::lower($title) . '.index', ['page' => -1]) }}" class="btn ms-2">1</a>
 <a href="{{ route(Str::lower($title) . '.index', ['page' => 2]) }}" class="btn ms-2"><i class="bi-chevron-right"></i></a>
