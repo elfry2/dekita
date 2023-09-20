@@ -16,13 +16,16 @@
         <div class="row h-100">
             <div class="col-sm-2 h-100 position-sticky d-{{ preference('nav.display') }}" id="nav">
                 <div class="d-flex align-items-center mt-2">
-                    <h3>{{ config('app.name') }}</h3>
+                    <span class="hide-on-big-screens me-2">
+                        @include('components.navbar-visibility-toggle-button')
+                    </span>
+                    <h3 class="m-0">{{ config('app.name') }}</h3>
                     <div class="btn invisible"><i class="bi-moon"></i></div>
                 </div>
                 <div class="mt-3">
                     <div class="d-flex align-items-center">
                         <b>Folders</b>
-                        <a href="{{ route('folders.create') }}" class="ms-auto text-dark"><i class="bi-plus-lg"></i></a>
+                        <a href="{{ route('folders.create') }}" class="btn ms-auto p-0"><i class="bi-plus-lg"></i></a>
                     </div>
                     <div class="list-group">
                         <a href="#" class="list-group-item list-group-item-action border-0 rounded">General</a>
@@ -65,15 +68,8 @@
                 </div>
             </div>
             <div class="col-sm" id="content">
-                <div class="mt-2 d-flex align-items-center position-sticky" id="actions">
-                    <form action="{{ route('preference.store') }}" method="post">
-                        @csrf
-                        {{-- <input type="hidden" name="redirectTo" value="{{ url()->current() }}"> --}}
-                        <input type="hidden" name="key" value="nav.display">
-                        <button type="submit" name="value"
-                            value="{{ preference('nav.display', 'block') == 'block' ? 'none' : 'block' }}" class="btn"><i
-                                class="bi-list"></i></button>
-                    </form>
+                <div class="mt-2 d-flex align-items-center position-sticky overflow-auto" id="actions">
+                    @include('components.navbar-visibility-toggle-button')
                     <h3 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h3>
                     @yield('actions')
                 </div>

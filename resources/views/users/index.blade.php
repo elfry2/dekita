@@ -10,6 +10,7 @@
   </div>
 </form>
 @endif
+<a href="#" class="btn ms-2"><i class="bi-search"></i></a>
 <a href="{{ route('register') }}" class="btn ms-2"><i
         class="bi-plus-lg"></i><span class="ms-2 hide-on-small-screens">New</span></a>
 <a href="{{ route(Str::lower($title) . '.index', ['page' => 0]) }}" class="btn ms-2"><i class="bi-chevron-left"></i></a>
