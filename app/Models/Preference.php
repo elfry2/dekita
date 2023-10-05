@@ -13,4 +13,8 @@ class Preference extends Model
         'key',
         'value',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
