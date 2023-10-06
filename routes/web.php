@@ -42,10 +42,11 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::resource('users', RegisteredUserController::class);
+    
     Route::get('users/{user}/delete', [RegisteredUserController::class, 'delete'])->name('users.delete');
     Route::get('users/preferences', [RegisteredUserController::class, 'preferences'])->name('users.preferences');
     Route::post('users/preferences', [RegisteredUserController::class, 'applyPreferences'])->name('users.applyPreferences');
+    Route::resource('users', RegisteredUserController::class);
 });
 
 Route::get('register', [RegisteredUserController::class, 'create'])

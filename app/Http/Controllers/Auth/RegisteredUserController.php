@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Schema;
 
 class RegisteredUserController extends Controller
 {
@@ -180,6 +181,44 @@ class RegisteredUserController extends Controller
         ->with('message', (object) [
             'type' => 'success',
             'content' => str(self::resource)->singular()->title . ' deleted.'
+        ]);
+    }
+
+    public function preferences() {
+        $primary = '\App\Models\\' . str(self::resource)->singular()->title();
+
+        $data = (object) [
+            'resource' => self::resource,
+            'title' => str(self::resource)->title() . ' preferences',
+            'backURL' => route(self::resource . '.index'),
+            'primary' => Schema::getColumnListing(self::resource)
+        ];
+
+        $data->primary = collect($data->primary)->map(function($element) {
+            return (object) [
+                'value' => $element,
+                'label' => str($element)->headline(),
+            ];
+        });
+        
+        return view(self::resource . '.preferences', (array) $data);
+    }
+
+    public function applyPreferences(Request $request) {
+        $validated = (object) $request->validate([
+            'order_column' => 'required|max:255',
+            'order_direction' => 'required|max:255',
+        ]);
+
+        preference([self::resource . '.order.column' => $validated->order_column]);
+
+        preference([self::resource . '.order.direction' => $validated->order_direction]);
+        
+        return redirect(route(self::resource . '.index'))
+        ->with('message', (object) [
+            'type' => 'success',
+            'content'
+            => 'Preferences updated.'
         ]);
     }
 }

@@ -37,7 +37,7 @@
                         <td>{{ $row->role->name }}</td>
                         <td>{{ $row->suspended_until ? date_format(date_create($row->suspended_until), 'd M Y') : '' }}</td>
                         <td align="right">
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi-three-dots-vertical"></i>
                                 </button>
@@ -46,7 +46,8 @@
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a href="{{ route(str($resource) . '.delete', [Str::singular($resource) => $row]) }}" class="dropdown-item"><i class="bi-trash"></i><span class="ms-2">Delete</span></a></li>
                                 </ul>
-                            </div>
+                            </div> --}}
+                            <a href="{{ route(str($resource) . '.edit', [Str::singular($resource) => $row]) }}" class="btn"><i class="bi-chevron-right"></i></a>
                         </td>
                     </tr>
                 @endforeach

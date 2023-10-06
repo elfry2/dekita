@@ -15,7 +15,7 @@
 <body>
     <div class="container-fluid h-100">
         <div class="row h-100">
-            <div class="col-sm-2 h-100 position-sticky d-{{ preference('nav.display') }}" id="nav">
+            <div class="col-sm-2 h-100 sticky-top d-{{ preference('nav.display') }}" id="nav">
 
                 <!-- BEGIN sidenav -->
 
@@ -82,20 +82,7 @@
                     @yield('topnav')
                 </div>
                 <div class="mt-2" id="content">
-                    @foreach ($errors->all() as $error)
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            {{ $error }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
-                        </div>
-                    @endforeach
-                    @if (session('message'))
-                    <div class="alert alert-{{ session('message')->type }} alert-dismissible fade show" role="alert">
-                        {{ session('message')->content }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                            aria-label="Close"></button>
-                    </div>
-                    @endif
+                    @include('components.messages')
                     @yield('content')
                 </div>
                 <div class="mt-2 mb-5 d-flex align-items-center justify-content-end position-sticky overflow-auto"

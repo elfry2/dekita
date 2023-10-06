@@ -4,12 +4,10 @@
         enctype="multipart/form-data">
         @method('patch')
         @csrf
-        @if (!empty($primary->avatar))
-            <div class="d-flex justify-content-center">
-                <img src="{{ asset('storage/' . $primary->avatar) }}" class="img-thumbnail"
-                    style="max-width: 16em; border-radius: 8em">
-            </div>
-        @endif
+        <div class="d-flex justify-content-center">
+            <img src="{{ asset($primary->avatar ? 'storage/' . $primary->avatar : 'images/no-avatar.svg') }}" class="img-thumbnail" alt="No avatar"
+                style="width: 16em; height: 16em; border-radius: 8em;">
+        </div>
         <div class="mt-3">
             <input name="avatar" type="file" id="avatarFileInput" class="form-control" placeholder="">
             <small class="text-secondary">Leave blank if you don't want to change avatar</small>
@@ -36,7 +34,7 @@
                         {{ $row->name }}</option>
                 @endforeach
             </select>
-            <label for="floatingSelect">Role</label>
+            <label for="roleSelectInput">Role</label>
         </div>
         <div class="form-floating mt-3">
             <input name="password" type="password" id="passwordPasswordInput" class="form-control" placeholder="">
