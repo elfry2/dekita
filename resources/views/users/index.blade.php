@@ -23,6 +23,7 @@
                     <th>#</th>
                     <th>Id.</th>
                     <th>Name</th>
+                    <th>Username</th>
                     <th>Email</th>
                     <th>Role</th>
                     <th>Suspended until</th>
@@ -33,6 +34,7 @@
                         <td>{{ $primary->perPage() * ($primary->currentPage() - 1) + $loop->index + 1 }}</td>
                         <td>{{ $row->id }}</td>
                         <td>{{ $row->name }}</td>
+                        <td>{{ $row->username }}</td>
                         <td>{{ $row->email }}</td>
                         <td>{{ $row->role->name }}</td>
                         <td>{{ $row->suspended_until ? date_format(date_create($row->suspended_until), 'd M Y') : '' }}</td>

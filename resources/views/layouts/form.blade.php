@@ -18,7 +18,7 @@
             <div class="col">
                 <div class="d-flex mt-3 align-items-center">
                     <a href="{{ $backURL ?? url()->previous() }}" class="btn"><i class="bi-chevron-left"></i></a>
-                    <h3 class="m-0 ms-2">{{ $title ?? '' }}</h3>
+                    <h5 class="m-0 ms-2">{{ $title ?? '' }}</h5>
                 </div>
                 <div class="mt-3 mb-5">
                     @include('components.messages')

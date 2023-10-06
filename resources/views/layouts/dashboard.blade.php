@@ -23,7 +23,7 @@
                     <span class="hide-on-big-screens me-2">
                         @include('components.sidenav-visibility-toggle-button')
                     </span>
-                    <h3 class="m-0">{{ config('app.name') }}</h3>
+                    <h5 class="m-0">{{ config('app.name') }}</h5>
                     <div class="btn invisible"><i class="bi-moon"></i></div>
                 </div>
                 <div class="mt-3">
@@ -78,7 +78,7 @@
             <div class="col-sm" id="content">
                 <div class="mt-2 d-flex align-items-center position-sticky overflow-auto" id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
-                    <h3 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h3>
+                    <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
                     @yield('topnav')
                 </div>
                 <div class="mt-2" id="content">
