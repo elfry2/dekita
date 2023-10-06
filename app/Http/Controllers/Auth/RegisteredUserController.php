@@ -16,6 +16,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rule;
 
 class RegisteredUserController extends Controller
 {
@@ -41,6 +42,14 @@ class RegisteredUserController extends Controller
             = $data->primary->where('name', 'like', '%' . request('q') . '%')
             ->orWhere('username', 'like', '%' . request('q') . '%')
             ->orWhere('email', 'like', '%' . request('q') . '%');
+        }
+
+        if (!empty(preference(self::resource . '.filters.role_id'))) {
+            $data->primary
+            = $data->primary->where(
+                'role_id',
+                preference(self::resource . '.filters.role_id')
+            );
         }
 
         $data->primary = $data->primary->paginate(config('app.rowsPerPage'));
@@ -193,7 +202,7 @@ class RegisteredUserController extends Controller
             'resource' => self::resource,
             'title' => str(self::resource)->title() . ' preferences',
             'backURL' => route(self::resource . '.index'),
-            'primary' => Schema::getColumnListing(self::resource)
+            'primary' => Schema::getColumnListing(self::resource),
         ];
 
         $data->primary = collect($data->primary)->map(function($element) {
@@ -202,6 +211,8 @@ class RegisteredUserController extends Controller
                 'label' => str($element)->headline(),
             ];
         });
+
+        $data->secondary = Role::all();
         
         return view(self::resource . '.preferences', (array) $data);
     }
@@ -210,11 +221,14 @@ class RegisteredUserController extends Controller
         $validated = (object) $request->validate([
             'order_column' => 'required|max:255',
             'order_direction' => 'required|max:255',
+            'role_id' => ['nullable', Rule::in(Role::pluck('id'))]
         ]);
 
         preference([self::resource . '.order.column' => $validated->order_column]);
 
         preference([self::resource . '.order.direction' => $validated->order_direction]);
+
+        preference([self::resource . '.filters.role_id' => $validated->role_id]);
         
         return redirect(route(self::resource . '.index'))
         ->with('message', (object) [
