@@ -43,17 +43,17 @@
         </div>
         <div class="row mt-3">
             <label>Suspended until</label>
-            <div class="col-sm-8">
+            <div class="col-sm-7">
                 <div class="form-floating">
                     <input name="suspended_until_date" type="date" id="suspendedUntilDateInput" class="form-control" placeholder=""
-                        value="{{ $primary->suspended_until ? date_format(date_create($primary->suspended_until), 'Y-m-d') : '' }}">
+                        value="{{ old('suspended_until_date') ?? $primary->suspended_until ? date_format(date_create($primary->suspended_until), 'Y-m-d') : '' }}">
                     <label for="suspendedUntilDateInput">Date</label>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <div class="form-floating">
                     <input name="suspended_until_time" type="time" id="suspendedUntilTimeInput" class="form-control" placeholder=""
-                        value="{{ $primary->suspended_until ? date_format(date_create($primary->suspended_until), 'H:i:s') : '' }}">
+                        value="{{ old('suspended_until_time') ?? $primary->suspended_until ? date_format(date_create($primary->suspended_until), 'H:i:s') : '' }}">
                     <label for="suspendedUntilDateInput">Time</label>
                 </div>
             </div>
