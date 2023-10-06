@@ -185,7 +185,7 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
-    'rowsPerPage' => 20,
+    'rowsPerPage' => 10,
 
     
 ];

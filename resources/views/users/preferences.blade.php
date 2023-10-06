@@ -28,7 +28,7 @@
                     </option>
                 @endforeach
             </select>
-            <label for="orderDirectionSelectInput">Sort by</label>
+            <label for="orderDirectionSelectInput">Sorting direction</label>
         </div>
         <div class="d-flex justify-content-end mt-3">
             <button class="btn" type="submit"><i class="bi-pencil-square"></i><span class="ms-2">Save</span></button>
