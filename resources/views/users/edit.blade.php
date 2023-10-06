@@ -5,7 +5,7 @@
         @method('patch')
         @csrf
         <div class="d-flex justify-content-center">
-            <img src="{{ asset($primary->avatar ? 'storage/' . $primary->avatar : 'images/no-avatar.svg') }}" class="img-thumbnail" alt="No avatar"
+            <img src="{{ asset($primary->avatar ? 'storage/' . $primary->avatar : 'images/no-avatar.svg') }}" class="img-thumbnail object-fit-cover" alt="No avatar"
                 style="width: 16em; height: 16em; border-radius: 8em;">
         </div>
         <div class="mt-3">
