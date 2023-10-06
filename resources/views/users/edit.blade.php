@@ -14,7 +14,7 @@
         </div>
         <div class="form-floating mt-3">
             <input name="name" type="text" id="nameTextInput" class="form-control" placeholder=""
-                value="{{ old('name') ?? $primary->name }}">
+                value="{{ old('name') ?? $primary->name }}" autofocus>
             <label for="nameTextInput">Name</label>
         </div>
         <div class="form-floating mt-3">

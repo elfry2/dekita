@@ -3,7 +3,7 @@
     <form action="{{ route(str($resource) . '.applyPreferences', [Str::singular($resource) => $primary]) }}" method="post">
         @csrf
         <div class="form-floating mt-3">
-            <select name="order_column" class="form-select" id="orderColumnSelectInput">
+            <select name="order_column" class="form-select" id="orderColumnSelectInput" autofocus>
                 @foreach ($primary as $option)
                     <option value="{{ $option->value }}" @if (preference($resource . '.order.column') == $option->value) selected @endif>
                         {{ $option->label }}</option>
