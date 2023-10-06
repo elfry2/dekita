@@ -38,7 +38,9 @@ class RegisteredUserController extends Controller
 
         if (!empty(request('q'))) {
             $data->primary
-                = $data->primary->where('name', 'like', '%' . request('q') . '%');
+            = $data->primary->where('name', 'like', '%' . request('q') . '%')
+            ->orWhere('username', 'like', '%' . request('q') . '%')
+            ->orWhere('email', 'like', '%' . request('q') . '%');
         }
 
         $data->primary = $data->primary->paginate(config('app.rowsPerPage'));
