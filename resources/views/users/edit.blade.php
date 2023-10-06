@@ -41,10 +41,22 @@
             <label for="passwordPasswordInput">Password</label>
             <small class="text-secondary">Leave blank if you don't want to change password</small>
         </div>
-        <div class="form-floating mt-3">
-            <input name="suspended_until" type="date" id="suspendedUntilDateInput" class="form-control" placeholder=""
-                value="{{ $primary->suspended_until ? date_format(date_create($primary->suspended_until), 'Y-m-d') : '' }}">
-            <label for="suspendedUntilDateInput">Suspended until</label>
+        <div class="row mt-3">
+            <label>Suspended until</label>
+            <div class="col-sm-8">
+                <div class="form-floating">
+                    <input name="suspended_until_date" type="date" id="suspendedUntilDateInput" class="form-control" placeholder=""
+                        value="{{ $primary->suspended_until ? date_format(date_create($primary->suspended_until), 'Y-m-d') : '' }}">
+                    <label for="suspendedUntilDateInput">Date</label>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-floating">
+                    <input name="suspended_until_time" type="time" id="suspendedUntilTimeInput" class="form-control" placeholder=""
+                        value="{{ $primary->suspended_until ? date_format(date_create($primary->suspended_until), 'H:i:s') : '' }}">
+                    <label for="suspendedUntilDateInput">Time</label>
+                </div>
+            </div>
         </div>
         <div class="d-flex justify-content-end mt-3">
             <a href="{{ route(str($resource) . '.delete', [Str::singular($resource) => $primary]) }}"

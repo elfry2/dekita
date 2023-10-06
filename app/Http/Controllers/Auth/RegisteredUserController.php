@@ -114,7 +114,8 @@ class RegisteredUserController extends Controller
             'password' => 'nullable|max:255',
             'role_id' => 'required|integer',
             'avatar' => 'nullable|image|max:10240',
-            'suspended_until' => 'nullable|date'
+            'suspended_until_date' => 'nullable|date',
+            'suspended_until_time' => 'nullable|max:9'
         ]);
 
         $user->name = $validated->name;
@@ -137,7 +138,9 @@ class RegisteredUserController extends Controller
 
         $user->role_id = $validated->role_id;
 
-        $user->suspended_until = $validated->suspended_until;
+        $user->suspended_until
+        = $validated->suspended_until_date . ' '
+        . $validated->suspended_until_time;
 
         if(isset($validated->avatar)) {
             Storage::delete($user->avatar ?: '');

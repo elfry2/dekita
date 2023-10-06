@@ -37,7 +37,7 @@
                         <td>{{ $row->username }}</td>
                         <td>{{ $row->email }}</td>
                         <td>{{ $row->role->name }}</td>
-                        <td>{{ $row->suspended_until ? date_format(date_create($row->suspended_until), 'd M Y') : '' }}</td>
+                        <td>{{ $row->suspended_until ? date_format(date_create($row->suspended_until), 'Y/m/d H:i') : '' }}</td>
                         <td align="right">
                             {{-- <div class="dropdown">
                                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
