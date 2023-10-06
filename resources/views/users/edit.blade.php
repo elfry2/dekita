@@ -9,6 +9,7 @@
                 style="width: 16em; height: 16em; border-radius: 8em;">
         </div>
         <div class="mt-3">
+		<label>Avatar</label>
             <input name="avatar" type="file" id="avatarFileInput" class="form-control" placeholder="">
             <small class="text-secondary">Leave blank if you don't want to change avatar</small>
         </div>
