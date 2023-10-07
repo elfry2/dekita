@@ -129,6 +129,7 @@ class RegisteredUserController extends Controller
         $data = (object) [
             'resource' => self::resource,
             'title' => 'Edit ' . str(self::resource)->title()->singular()->lower(),
+            'backURL' => route(self::resource . '.index'),
             'primary' => $primary,
             'secondary' => Role::all(),
         ];
@@ -240,6 +241,7 @@ class RegisteredUserController extends Controller
         $data = (object) [
             'resource' => self::resource,
             'title' => str(self::resource)->title() . ' preferences',
+            'backURL' => route(self::resource . '.index'),
             'primary' => Schema::getColumnListing(self::resource),
         ];
 
