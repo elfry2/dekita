@@ -62,7 +62,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view('auth.register', [
+            'primary' => Role::all()
+        ]);
     }
 
     /**
@@ -72,19 +74,48 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $isByAdmin = Auth::id() && (Auth::user()->role->name == 'Administrator');
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'username' => 'required|alpha_num:ascii|max:255|unique:users',
+            'avatar' => 'nullable|image|max:10240',
+            'role_id' => [
+                'integer',
+                Rule::requiredIf(fn() => $isByAdmin)
+            ],
         ]);
+
+        $avatarPath = null;
+
+        if(isset($request->avatar)) {
+            $avatarPath = $request->file('avatar')->store('avatars');
+        }
+
+        $roleId = Role::where('name', 'Standard User')->first()->id;
+
+        if($isByAdmin) {
+            $roleId = $request->role_id;
+        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'username' => $request->username,
+            'avatar' => $avatarPath,
+            'role_id' => $roleId,
         ]);
 
         event(new Registered($user));
+
+        if($isByAdmin)
+        return redirect(route('users.index'))->with('message', (object) [
+            'type' => 'success',
+            'content' => 'User created.'
+        ]);
 
         Auth::login($user);
 
@@ -111,7 +142,7 @@ class RegisteredUserController extends Controller
             'name' => 'required|max:255',
             'username' => 'required|alpha_num:ascii|max:255',
             'email' => 'required|max:255|email',
-            'password' => 'nullable|max:255',
+            'password' => 'nullable|max:255|confirmed',
             'role_id' => 'required|integer',
             'avatar' => 'nullable|image|max:10240',
             'suspended_until_date'=> [
@@ -233,11 +264,13 @@ class RegisteredUserController extends Controller
             'role_id' => ['nullable', Rule::in(Role::pluck('id'))]
         ]);
 
-        preference([self::resource . '.order.column' => $validated->order_column]);
-
-        preference([self::resource . '.order.direction' => $validated->order_direction]);
-
-        preference([self::resource . '.filters.role_id' => $validated->role_id]);
+        foreach([
+            [self::resource . '.order.column' => $validated->order_column],
+            [self::resource . '.order.direction' => $validated->order_direction],
+            [self::resource . '.filters.role_id' => $validated->role_id],
+        ] as $preference) {
+            preference($preference);
+        }
         
         return redirect(route(self::resource . '.index'))
         ->with('message', (object) [

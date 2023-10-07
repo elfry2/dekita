@@ -30,9 +30,9 @@
         </div>
         <div class="form-floating mt-3">
             <select name="role_id" class="form-select" id="roleSelectInput">
-                @foreach ($secondary as $row)
-                    <option value="{{ $row->id }}" @if ($primary->role->id == $row->id) selected @endif>
-                        {{ $row->name }}</option>
+                @foreach ($secondary as $option)
+                    <option value="{{ $option->id }}" @if ($primary->role->id == $option->id) selected @endif>
+                        {{ $option->name }}</option>
                 @endforeach
             </select>
             <label for="roleSelectInput">Role</label>
@@ -40,6 +40,11 @@
         <div class="form-floating mt-3">
             <input name="password" type="password" id="passwordPasswordInput" class="form-control" placeholder="">
             <label for="passwordPasswordInput">Password</label>
+            <small class="text-secondary">Leave blank if you don't want to change password</small>
+        </div>
+        <div class="form-floating">
+            <input name="password_confirmation" type="password" id="passwordConfirmationPasswordInput" class="form-control" placeholder="">
+            <label for="passwordConfirmationPasswordInput">Confirm password</label>
             <small class="text-secondary">Leave blank if you don't want to change password</small>
         </div>
         <div class="row mt-3">

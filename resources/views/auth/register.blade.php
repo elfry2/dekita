@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
         <!-- Name -->
@@ -7,6 +7,13 @@
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!-- Username -->
+        <div class="mt-4">
+            <x-input-label for="username" :value="__('Username')" />
+            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('username')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
@@ -37,6 +44,26 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        @if(Auth::id() && (Auth::user()->role->name == 'Administrator'))
+        <!-- Role -->
+        <div class="mt-4">
+            <x-input-label for="role_id" :value="__('Role')" />
+            <select name="role_id" id="roleSelectInput" style="width: 100%;">
+                @foreach ($primary->reverse() as $option)
+                    <option value="{{ $option->id }}" @if(old('role_id') == $option->id) selected @endif>
+                        {{ $option->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        @endif
+
+        <!-- Avatar -->
+        <div class="mt-4">
+            <x-input-label for="avatar" :value="__('Avatar')" />
+            <x-text-input id="avatar" class="block mt-1 w-full" type="file" name="avatar" :value="old('avatar')" />
+            <x-input-error :messages="$errors->get('avatar')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">

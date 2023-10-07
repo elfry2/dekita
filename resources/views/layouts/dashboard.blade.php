@@ -65,7 +65,7 @@
                         </a>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
-                            <button onclick="this.parentElement.submit()"
+                            <button type="submit"
                                 class="list-group-item list-group-item-action border-0 rounded"><i
                                     class="bi-box-arrow-left"></i><span class="ms-2">Log out</span></button>
                         </form>

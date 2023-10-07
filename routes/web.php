@@ -24,7 +24,13 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
     // return redirect(route('tasks.index'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'notSuspended'])->name('dashboard');
+
+Route::get('/account-suspended', function () {
+    return view('account-suspended.index', [
+        'backURL' => route('home.index')
+    ]);
+})->middleware('auth')->name('account-suspended');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('tasks', TaskController::class);
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'admin', 'notSuspended'])->group(function () {
     
     Route::get('users/{user}/delete', [RegisteredUserController::class, 'delete'])->name('users.delete');
     Route::get('users/preferences', [RegisteredUserController::class, 'preferences'])->name('users.preferences');
