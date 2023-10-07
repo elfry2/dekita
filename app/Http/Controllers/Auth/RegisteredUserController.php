@@ -24,8 +24,6 @@ class RegisteredUserController extends Controller
 
     public function index()
     {
-        preference([self::resource . '.page' => request('page') ?: 1]);
-
         $primary = '\App\Models\\' . str(self::resource)->singular()->title();
 
         $data = (object) [
@@ -131,10 +129,6 @@ class RegisteredUserController extends Controller
         $data = (object) [
             'resource' => self::resource,
             'title' => 'Edit ' . str(self::resource)->title()->singular()->lower(),
-            'backURL' => route(
-                self::resource . '.index',
-                ['page' => preference(self::resource . '.page', 1)]
-            ),
             'primary' => $primary,
             'secondary' => Role::all(),
         ];
@@ -246,10 +240,6 @@ class RegisteredUserController extends Controller
         $data = (object) [
             'resource' => self::resource,
             'title' => str(self::resource)->title() . ' preferences',
-            'backURL' => route(
-                self::resource . '.index',
-                ['page' => preference(self::resource . '.page', 1)]
-            ),
             'primary' => Schema::getColumnListing(self::resource),
         ];
 

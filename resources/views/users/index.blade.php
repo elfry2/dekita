@@ -30,7 +30,7 @@
                     <th></th>
                 </tr>
                 @foreach ($primary as $row)
-                    <tr>
+                    <tr id="row{{ $row->id }}">
                         <td>{{ $primary->perPage() * ($primary->currentPage() - 1) + $loop->index + 1 }}</td>
                         <td>{{ $row->id }}</td>
                         <td>{{ $row->name }}</td>
@@ -49,7 +49,7 @@
                                     <li><a href="{{ route(str($resource) . '.delete', [Str::singular($resource) => $row]) }}" class="dropdown-item"><i class="bi-trash"></i><span class="ms-2">Delete</span></a></li>
                                 </ul>
                             </div> --}}
-                            <a href="{{ route(str($resource) . '.edit', [Str::singular($resource) => $row]) }}" class="btn"><i class="bi-chevron-right"></i></a>
+                            <a href="{{ route(str($resource) . '.edit', [Str::singular($resource) => $row, 'back' => route($resource . '.index') . '#row' . $loop->index+1]) }}" class="btn"><i class="bi-chevron-right"></i></a>
                         </td>
                     </tr>
                 @endforeach

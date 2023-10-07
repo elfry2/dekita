@@ -85,7 +85,7 @@
                     @include('components.messages')
                     @yield('content')
                 </div>
-                <div class="mt-2 mb-5 d-flex align-items-center justify-content-end position-sticky overflow-auto"
+                <div class="mt-2 d-flex align-items-center justify-content-end position-sticky overflow-auto"
                     id="bottomnav">
                     @yield('bottomnav')
                 </div>
