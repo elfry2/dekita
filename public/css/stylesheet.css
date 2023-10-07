@@ -14,12 +14,29 @@ a {
 
 @media only screen and (max-width: 600px) {
     .hide-on-small-screens {
-        display: none; !important
+        display: none !important;
     }
 }
 
 @media only screen and (min-width: 601px) {
 	.hide-on-big-screens {
-		display: none; !important;
+		display: none !important;
 	}
+    
+    /* Sources:
+    * - https://css-tricks.com/quick-css-trick-how-to-center-an-object-exactly-in-the-center/
+    * - https://stackoverflow.com/questions/31217268/center-div-on-the-middle-of-screen
+    */
+    .screen-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .screen-center-x {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%);
+    }
 }

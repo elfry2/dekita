@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Folder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,10 @@ class FolderSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Folder::create([
+            'name' => 'College',
+            'description' => 'Assignments for each subject',
+            'user_id' => 1,
+        ]);
     }
 }

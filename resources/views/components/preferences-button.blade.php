@@ -1,1 +1,1 @@
-<a href="{{ route($resource . '.preferences') }}" class="btn ms-2"><i class="bi-sliders"></i></a>
+<a href="{{ route($resource . '.preferences', ['back' => request()->fullUrl()]) }}" class="btn ms-2"><i class="bi-sliders"></i></a>

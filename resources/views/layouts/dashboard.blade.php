@@ -23,7 +23,7 @@
                     <span class="hide-on-big-screens me-2">
                         @include('components.sidenav-visibility-toggle-button')
                     </span>
-                    <h5 class="m-0">{{ config('app.name') }}</h5>
+                    <h5 onclick="window.location.href = '{{ config('app.url') }}'" class="m-0">{{ config('app.name') }}</h5>
                     <div class="btn invisible"><i class="bi-moon"></i></div>
                 </div>
                 <div class="mt-3">
@@ -65,8 +65,7 @@
                         </a>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
-                            <button type="submit"
-                                class="list-group-item list-group-item-action border-0 rounded"><i
+                            <button type="submit" class="list-group-item list-group-item-action border-0 rounded"><i
                                     class="bi-box-arrow-left"></i><span class="ms-2">Log out</span></button>
                         </form>
                     </div>
@@ -76,18 +75,24 @@
 
             </div>
             <div class="col-sm" id="content">
-                <div class="mt-2 d-flex align-items-center position-sticky overflow-auto" id="topnav">
+                <div class="mt-2 d-flex align-items-center overflow-auto" id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
                     <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
                     @yield('topnav')
+                    @include('components.search')
+                    @include('components.create-button')
+                    @include('components.preferences-button')
+                    @include('components.pagination-buttons')
                 </div>
                 <div class="mt-2" id="content">
                     @include('components.messages')
+                    @include('components.search-text')
                     @yield('content')
                 </div>
                 <div class="mt-2 d-flex align-items-center justify-content-end position-sticky overflow-auto"
                     id="bottomnav">
                     @yield('bottomnav')
+                    @include('components.pagination-buttons')
                 </div>
             </div>
         </div>

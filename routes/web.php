@@ -3,6 +3,7 @@
 use App\Http\Controllers\PreferenceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\FolderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,11 +27,12 @@ Route::get('/dashboard', function () {
     // return redirect(route('tasks.index'));
 })->middleware(['auth', 'verified', 'notSuspended'])->name('dashboard');
 
-Route::get('/account-suspended', function () {
-    return view('account-suspended.index', [
-        'backURL' => route('home.index')
-    ]);
-})->middleware('auth')->name('account-suspended');
+Route::get('register', [RegisteredUserController::class, 'create'])
+                ->name('register');
+
+Route::post('register', [RegisteredUserController::class, 'store']);
+
+require __DIR__.'/auth.php';
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -38,24 +40,26 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-
 Route::post('/preference', [PreferenceController::class, 'store'])->name('preference.store');
 
-Route::middleware('auth')->group(function () {
+Route::get('/account-suspended', function () {
+    return view('account-suspended.index', [
+        'backURL' => route('home.index')
+    ]);
+})->middleware('auth')->name('account-suspended');
+
+Route::middleware(['auth', 'notSuspended'])->group(function () {
+    Route::get('folders/{user}/delete', [FolderController::class, 'delete'])->name('folders.delete');
+    Route::get('folders/preferences', [FolderController::class, 'preferences'])->name('folders.preferences');
+    Route::post('folders/preferences', [FolderController::class, 'applyPreferences'])->name('folders.applyPreferences');
     Route::resource('folders', FolderController::class);
-    Route::resource('tasks', TaskController::class);
-});
-
-Route::middleware(['auth', 'admin', 'notSuspended'])->group(function () {
     
-    Route::get('users/{user}/delete', [RegisteredUserController::class, 'delete'])->name('users.delete');
-    Route::get('users/preferences', [RegisteredUserController::class, 'preferences'])->name('users.preferences');
-    Route::post('users/preferences', [RegisteredUserController::class, 'applyPreferences'])->name('users.applyPreferences');
-    Route::resource('users', RegisteredUserController::class);
+    Route::resource('tasks', TaskController::class);
+    
+    Route::middleware('admin')->group(function() {
+        Route::get('users/{user}/delete', [RegisteredUserController::class, 'delete'])->name('users.delete');
+        Route::get('users/preferences', [RegisteredUserController::class, 'preferences'])->name('users.preferences');
+        Route::post('users/preferences', [RegisteredUserController::class, 'applyPreferences'])->name('users.applyPreferences');
+        Route::resource('users', RegisteredUserController::class);
+    });
 });
-
-Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
-
-Route::post('register', [RegisteredUserController::class, 'store']);

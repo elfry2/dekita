@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Rule;
 
@@ -52,7 +51,8 @@ class RegisteredUserController extends Controller
             );
         }
 
-        $data->primary = $data->primary->paginate(config('app.rowsPerPage'));
+        $data->primary = $data->primary
+        ->paginate(config('app.rowsPerPage'))->withQueryString();
 
         return view(self::resource . '.index', (array) $data);
     }
@@ -84,6 +84,7 @@ class RegisteredUserController extends Controller
             'avatar' => 'nullable|image|max:10240',
             'role_id' => [
                 'integer',
+                'exists:roles,id',
                 Rule::requiredIf(fn() => $isByAdmin)
             ],
         ]);
@@ -100,7 +101,7 @@ class RegisteredUserController extends Controller
             $roleId = $request->role_id;
         }
 
-        $user = User::create([
+        $primary = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -109,15 +110,16 @@ class RegisteredUserController extends Controller
             'role_id' => $roleId,
         ]);
 
-        event(new Registered($user));
+        event(new Registered($primary));
 
         if($isByAdmin)
-        return redirect(route('users.index'))->with('message', (object) [
+        return redirect(route(self::resource . '.index'))
+        ->with('message', (object) [
             'type' => 'success',
-            'content' => 'User created.'
+            'content' => str(self::resource)->singular()->title() . ' created.'
         ]);
 
-        Auth::login($user);
+        Auth::login($primary);
 
         return redirect(RouteServiceProvider::HOME);
     }
@@ -137,12 +139,14 @@ class RegisteredUserController extends Controller
     }
     
     public function update(Request $request, User $user) {
+        $primary = $user;
+
         $validated = (object) $request->validate([
             'name' => 'required|max:255',
             'username' => 'required|alpha_num:ascii|max:255',
             'email' => 'required|max:255|email',
             'password' => 'nullable|max:255|confirmed',
-            'role_id' => 'required|integer',
+            'role_id' => 'required|integer|exists:roles,id',
             'avatar' => 'nullable|image|max:10240',
             'suspended_until_date'=> [
                 'nullable',
@@ -152,50 +156,50 @@ class RegisteredUserController extends Controller
             'suspended_until_time' => 'nullable|max:9'
         ]);
 
-        $user->name = $validated->name;
+        $primary->name = $validated->name;
 
-        if($validated->username != $user->username) {
+        if($validated->username != $primary->username) {
             $request->validate([
                 'username' => 'unique:users',
             ]);
 
-            $user->username = $validated->username;
+            $primary->username = $validated->username;
         }
 
-        if($validated->email != $user->email) {
+        if($validated->email != $primary->email) {
             $request->validate([
                 'email' => 'unique:users',
             ]);
 
-            $user->email = $validated->email;
+            $primary->email = $validated->email;
         }
 
-        $user->role_id = $validated->role_id;
+        $primary->role_id = $validated->role_id;
 
-        $user->suspended_until
+        $primary->suspended_until
         = !$validated->suspended_until_date
         ? null
         : $validated->suspended_until_date
         . ' ' . ($validated->suspended_until_time ?: '00:00:00');
 
         if(isset($validated->avatar)) {
-            Storage::delete($user->avatar ?: '');
+            Storage::delete($primary->avatar ?: '');
             
             $avatarPath = $request->file('avatar')->store('avatars');
             
-            $user->avatar = $avatarPath;
+            $primary->avatar = $avatarPath;
         }
 
         if(isset($validated->password)) {
-            $user->password = Hash::make($validated->password);
+            $primary->password = Hash::make($validated->password);
         }
 
-        $user->save();
+        $primary->save();
 
         return redirect()->back()
         ->with('message', (object) [
             'type' => 'success',
-            'content' => str(self::resource)->singular()->title . ' updated.'
+            'content' => str(self::resource)->singular()->title() . ' updated.'
         ]);
     }
 
@@ -214,29 +218,29 @@ class RegisteredUserController extends Controller
 
     public function destroy(User $user)
     {
-        if($user->id == Auth::id())
+        $primary = $user;
+
+        if($primary->id == Auth::id())
         return redirect(route(self::resource . '.index'))
         ->with('message', (object) [
             'type' => 'warning',
             'content' => 'Cannot delete as the same user.',
         ]);
 
-        Storage::delete($user->avatar ?: '');
+        Storage::delete($primary->avatar ?: '');
 
-        $user->preferences()->delete();
+        $primary->preferences()->delete();
 
-        $user->delete();
+        $primary->delete();
 
         return redirect(route(self::resource . '.index'))
         ->with('message', (object) [
             'type' => 'success',
-            'content' => str(self::resource)->singular()->title . ' deleted.'
+            'content' => str(self::resource)->singular()->title() . ' deleted.'
         ]);
     }
 
     public function preferences() {
-        $primary = '\App\Models\\' . str(self::resource)->singular()->title();
-
         $data = (object) [
             'resource' => self::resource,
             'title' => str(self::resource)->title() . ' preferences',
@@ -273,8 +277,7 @@ class RegisteredUserController extends Controller
         return redirect(route(self::resource . '.index'))
         ->with('message', (object) [
             'type' => 'success',
-            'content'
-            => 'Preferences updated.'
+            'content' => 'Preferences updated.'
         ]);
     }
 }

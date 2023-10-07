@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             PreferenceSeeder::class,
+            FolderSeeder::class,
         ];
 
         foreach($seeders as $seeder) {
