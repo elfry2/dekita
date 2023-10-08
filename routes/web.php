@@ -52,7 +52,7 @@ Route::middleware(['auth', 'notSuspended'])->group(function () {
     Route::get('folders/{folder}/delete', [FolderController::class, 'delete'])->name('folders.delete');
     Route::get('folders/preferences', [FolderController::class, 'preferences'])->name('folders.preferences');
     Route::post('folders/preferences', [FolderController::class, 'applyPreferences'])->name('folders.applyPreferences');
-    Route::resource('folders', FolderController::class);
+    Route::resource('folders', FolderController::class)->except(['index', 'show']);
     
     Route::resource('tasks', TaskController::class);
     
@@ -61,6 +61,6 @@ Route::middleware(['auth', 'notSuspended'])->group(function () {
         Route::get('users/search', [RegisteredUserController::class, 'search'])->name('users.search');
         Route::get('users/preferences', [RegisteredUserController::class, 'preferences'])->name('users.preferences');
         Route::post('users/preferences', [RegisteredUserController::class, 'applyPreferences'])->name('users.applyPreferences');
-        Route::resource('users', RegisteredUserController::class);
+        Route::resource('users', RegisteredUserController::class)->except('show');
     });
 });
