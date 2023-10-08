@@ -9,9 +9,8 @@
                 style="width: 16em; height: 16em; border-radius: 8em;">
         </div>
         <div class="mt-3">
-		<label>Avatar</label>
+		<label>Avatar <span class="text-secondary">(optional)</span></label>
             <input name="avatar" type="file" id="avatarFileInput" class="form-control" placeholder="">
-            <small class="text-secondary">Leave blank if you don't want to change avatar</small>
         </div>
         <div class="form-floating mt-3">
             <input name="name" type="text" id="nameTextInput" class="form-control" placeholder=""
@@ -39,16 +38,15 @@
         </div>
         <div class="form-floating mt-3">
             <input name="password" type="password" id="passwordPasswordInput" class="form-control" placeholder="">
-            <label for="passwordPasswordInput">Password</label>
-            <small class="text-secondary">Leave blank if you don't want to change password</small>
+            <label for="passwordPasswordInput">Password <span class="text-secondary">(optional)</span></label>
         </div>
-        <div class="form-floating">
+        <div class="form-floating mt-1">
             <input name="password_confirmation" type="password" id="passwordConfirmationPasswordInput" class="form-control" placeholder="">
-            <label for="passwordConfirmationPasswordInput">Confirm password</label>
+            <label for="passwordConfirmationPasswordInput">Confirm password <span class="text-secondary">(optional)</span></label>
             <small class="text-secondary">Leave blank if you don't want to change password</small>
         </div>
         <div class="row mt-3">
-            <label>Suspended until</label>
+            <label>Suspended until <span class="text-secondary">(optional)</span></label>
             <div class="col-sm-7">
                 <div class="form-floating">
                     <input name="suspended_until_date" type="date" id="suspendedUntilDateInput" class="form-control" placeholder=""
@@ -66,7 +64,7 @@
         </div>
         <div class="d-flex justify-content-end mt-3">
             <a href="{{ route(str($resource) . '.delete', [Str::singular($resource) => $primary]) }}"
-                class="btn text-danger"><i class="bi-trash"></i></a>
+                class="btn text-danger" title="Delete {{ str($resource)->singular() }}"><i class="bi-trash"></i></a>
             <button class="btn" type="submit"><i class="bi-pencil-square"></i><span class="ms-2">Save</span></button>
         </div>
     </form>

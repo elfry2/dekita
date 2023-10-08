@@ -21,6 +21,9 @@ class RegisteredUserController extends Controller
 {
     protected const resource = 'users';
 
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $primary = '\App\Models\\' . str(self::resource)->singular()->title();
@@ -123,7 +126,18 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
+    
+    /**
+     * Display the specified resource.
+     */
+    public function show(User $user)
+    {
+        //
+    }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(User $user)
     {
         $primary = $user;
@@ -138,6 +152,9 @@ class RegisteredUserController extends Controller
         return view(self::resource . '.edit', (array) $data);
     }
     
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, User $user) {
         $primary = $user;
 
@@ -203,6 +220,9 @@ class RegisteredUserController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for deleting the specified resource.
+     */
     public function delete(User $user)
     {
         $primary = $user;
@@ -216,6 +236,9 @@ class RegisteredUserController extends Controller
         return view(self::resource . '.delete', (array) $data);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(User $user)
     {
         $primary = $user;
@@ -240,6 +263,9 @@ class RegisteredUserController extends Controller
         ]);
     }
 
+    /**
+     * Show the form for editing the preferences for the listing of the resource.
+     */
     public function preferences() {
         $data = (object) [
             'resource' => self::resource,
@@ -259,6 +285,9 @@ class RegisteredUserController extends Controller
         return view(self::resource . '.preferences', (array) $data);
     }
 
+    /**
+     * Update the preferences for the listing of the resource in storage.
+     */
     public function applyPreferences(Request $request) {
         $validated = (object) $request->validate([
             'order_column' => 'required|max:255',
@@ -279,5 +308,17 @@ class RegisteredUserController extends Controller
             'type' => 'success',
             'content' => 'Preferences updated.'
         ]);
+    }
+
+    /**
+     * Show the form for searching the resource.
+     */
+    public function search() {
+        $data = (object) [
+            'resource' => self::resource,
+            'title' => 'Search ' . str(self::resource)->title()->lower()
+        ];
+
+        return view(self::resource . '.search', (array) $data);
     }
 }

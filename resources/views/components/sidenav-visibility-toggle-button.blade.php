@@ -3,6 +3,6 @@
     {{-- <input type="hidden" name="redirectTo" value="{{ url()->current() }}"> --}}
     <input type="hidden" name="key" value="nav.display">
     <button id="sidenavVisibilityToggleButton" type="submit" name="value"
-        value="{{ preference('nav.display', 'block') == 'block' ? 'none' : 'block' }}" class="btn"><i
+        value="{{ preference('nav.display', 'block') == 'block' ? 'none' : 'block' }}" class="btn" title="Toggle sidenav visibility"><i
             class="bi-list"></i></button>
 </form>

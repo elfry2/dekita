@@ -16,8 +16,8 @@
     <div class="container-fluid mx-auto" style="max-width: 32em">
         <div class="row">
             <div class="col">
-                <div class="d-flex mt-3 align-items-center">
-                    <a href="{{ request('back') ?? url()->previous() }}" class="btn"><i class="bi-chevron-left"></i></a>
+                <div class="d-flex mt-2 align-items-center">
+                    <a href="{{ request('back') ?? url()->previous() }}" class="btn" title="Go back"><i class="bi-chevron-left"></i></a>
                     <h5 class="m-0 ms-2">{{ $title ?? '' }}</h5>
                 </div>
                 <div class="mt-3 mb-5">

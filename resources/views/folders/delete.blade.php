@@ -1,7 +1,7 @@
 @extends('layouts.form')
 @section('content')
-    <h5 class="mt-5">Delete {{ str($resource)->singular() }} {{ $primary->id }}?</h5>
-    <p>This action cannot be undone.</p>
+    <h5 class="mt-5">Delete {{ str($resource)->singular() }} {{ $primary->name }}?</h5>
+    <p>Tasks that belong to this folder will also be deleted. This action cannot be undone.</p>
     <form action="{{ route(str($resource) . '.destroy', [Str::singular($resource) => $primary]) }}" method="post" class="mt-5">
         @method('delete')
         @csrf

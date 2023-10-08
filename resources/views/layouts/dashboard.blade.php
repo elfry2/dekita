@@ -23,16 +23,49 @@
                     <span class="hide-on-big-screens me-2">
                         @include('components.sidenav-visibility-toggle-button')
                     </span>
-                    <h5 onclick="window.location.href = '{{ config('app.url') }}'" class="m-0">{{ config('app.name') }}</h5>
+                    <h5 onclick="window.location.href = '{{ route('home.index') }}'" class="m-0">
+                        {{ config('app.name') }} <span class="hide-on-big-screens"><i class="bi-chevron-right fs-6"></i>
+                            {{ $title }}</span></span></h5>
                     <div class="btn invisible"><i class="bi-moon"></i></div>
                 </div>
                 <div class="mt-3">
                     <div class="d-flex align-items-center">
                         <b>Folders</b>
-                        <a href="{{ route('folders.index') }}" class="ms-auto">Manage</a>
+                        <a href="{{ route('folders.create') }}" class="ms-auto btn" title="Create new folder"><i class="bi-plus-lg"></i></a>
                     </div>
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action border-0 rounded">General</a>
+                        <form action="{{ route('preference.store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="key" value="currentFolderId">
+                            <button type="submit" name="value" value="" title="The default folder"
+                                class="list-group-item list-group-item-action border-0 rounded">General</button>
+                        </form>
+                        @foreach ((new \App\Models\Folder)->orderBy('name', 'ASC')->get() as $item)
+                        <form action="{{ route('preference.store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="key" value="currentFolderId">
+                            <button type="submit" name="value" value="{{ $item->id }}" title="{{ $item->description ?? '' }}"
+                                class="list-group-item list-group-item-action border-0 py-0 pe-0 rounded">
+                                <div class="d-flex align-items-center">
+                                    <span class="flex-grow-1">{{ $item->name }}</span>
+                                    <div class="dropdown">
+                                        <a href="#" class="btn" data-bs-toggle="dropdown">
+                                            <i class="bi-three-dots-vertical"></i>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{ route('folders.edit', ['folder' => $item, 'back' => request()->fullUrl()]) }}"><i class="bi-pencil-square"></i><span
+                                                        class="ms-2">Edit</span></a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="{{ route('folders.delete', ['folder' => $item, 'back' => request()->fullUrl()]) }}"><i class="bi-trash"></i><span
+                                                        class="ms-2">Delete</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </button>
+                        </form>
+                        @endforeach
                     </div>
                 </div>
                 <div class="mt-3">
@@ -80,7 +113,7 @@
                     <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
                     @yield('topnav')
                     @include('components.search')
-                    @include('components.create-button')
+                    @include('components.creation-button')
                     @include('components.preferences-button')
                     @include('components.pagination-buttons')
                 </div>
@@ -94,6 +127,7 @@
                     @yield('bottomnav')
                     @include('components.pagination-buttons')
                 </div>
+                <div class="mt-2"></div>
             </div>
         </div>
     </div>
