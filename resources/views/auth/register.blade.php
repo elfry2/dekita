@@ -1,9 +1,9 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+        <a href="{{ request('back') ?? url()->previous() }}" class="btn" title="Go back" style="background-color: white; color: black; padding: 0.33em; padding-left: 0.5em; padding-right: 0.5em; border-radius: 4px">Go back</a>
         @csrf
-
         <!-- Name -->
-        <div>
+        <div class="mt-4">
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />

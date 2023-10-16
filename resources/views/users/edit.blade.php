@@ -5,12 +5,17 @@
         @method('patch')
         @csrf
         <div class="d-flex justify-content-center">
-            <img src="{{ asset($primary->avatar ? 'storage/' . $primary->avatar : 'images/no-avatar.svg') }}" class="img-thumbnail object-fit-cover" alt="No avatar"
-                style="width: 16em; height: 16em; border-radius: 8em;">
+            <img src="{{ asset($primary->avatar ? 'storage/' . $primary->avatar : 'images/no-avatar.svg') }}"
+                class="img-thumbnail object-fit-cover" alt="No avatar" style="width: 16em; height: 16em; border-radius: 8em;">
         </div>
         <div class="mt-3">
-		<label>Avatar <span class="text-secondary">(optional)</span></label>
-            <input name="avatar" type="file" id="avatarFileInput" class="form-control" placeholder="">
+            <label>Avatar <span class="text-secondary">(optional)</span></label>
+            <div class="d-flex align-items-center">
+                <input name="avatar" type="file" id="avatarFileInput" class="form-control" placeholder="">
+                @if ($primary->avatar)
+                <a href="{{ route(str($resource) . '.deleteAvatar', [Str::singular($resource) => $primary, 'back' => request()->fullUrl()]) }}" class="btn text-danger ms-2" title="Delete avatar"><i class="bi-trash"></i></a>
+                @endif
+            </div>
         </div>
         <div class="form-floating mt-3">
             <input name="name" type="text" id="nameTextInput" class="form-control" placeholder=""
@@ -41,22 +46,26 @@
             <label for="passwordPasswordInput">Password <span class="text-secondary">(optional)</span></label>
         </div>
         <div class="form-floating mt-1">
-            <input name="password_confirmation" type="password" id="passwordConfirmationPasswordInput" class="form-control" placeholder="">
-            <label for="passwordConfirmationPasswordInput">Confirm password <span class="text-secondary">(optional)</span></label>
+            <input name="password_confirmation" type="password" id="passwordConfirmationPasswordInput" class="form-control"
+                placeholder="">
+            <label for="passwordConfirmationPasswordInput">Confirm password <span
+                    class="text-secondary">(optional)</span></label>
             <small class="text-secondary">Leave blank if you don't want to change password</small>
         </div>
         <div class="row mt-3">
             <label>Suspended until <span class="text-secondary">(optional)</span></label>
             <div class="col-sm-7">
                 <div class="form-floating">
-                    <input name="suspended_until_date" type="date" id="suspendedUntilDateInput" class="form-control" placeholder=""
+                    <input name="suspended_until_date" type="date" id="suspendedUntilDateInput" class="form-control"
+                        placeholder=""
                         value="{{ old('suspended_until_date') ?? $primary->suspended_until ? date_format(date_create($primary->suspended_until), 'Y-m-d') : '' }}">
                     <label for="suspendedUntilDateInput">Date</label>
                 </div>
             </div>
             <div class="col-sm-5">
                 <div class="form-floating">
-                    <input name="suspended_until_time" type="time" id="suspendedUntilTimeInput" class="form-control" placeholder=""
+                    <input name="suspended_until_time" type="time" id="suspendedUntilTimeInput" class="form-control"
+                        placeholder=""
                         value="{{ old('suspended_until_time') ?? $primary->suspended_until ? date_format(date_create($primary->suspended_until), 'H:i:s') : '' }}">
                     <label for="suspendedUntilDateInput">Time</label>
                 </div>

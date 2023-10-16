@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Schema;
@@ -36,26 +37,26 @@ class RegisteredUserController extends Controller
                 ->orderBy(
                     preference(self::resource . '.order.column', 'id'),
                     preference(self::resource . '.order.direction', 'ASC')
-            ),
+                ),
         ];
 
         if (!empty(request('q'))) {
             $data->primary
-            = $data->primary->where('name', 'like', '%' . request('q') . '%')
-            ->orWhere('username', 'like', '%' . request('q') . '%')
-            ->orWhere('email', 'like', '%' . request('q') . '%');
+                = $data->primary->where('name', 'like', '%' . request('q') . '%')
+                ->orWhere('username', 'like', '%' . request('q') . '%')
+                ->orWhere('email', 'like', '%' . request('q') . '%');
         }
 
         if (!empty(preference(self::resource . '.filters.role_id'))) {
             $data->primary
-            = $data->primary->where(
-                'role_id',
-                preference(self::resource . '.filters.role_id')
-            );
+                = $data->primary->where(
+                    'role_id',
+                    preference(self::resource . '.filters.role_id')
+                );
         }
 
         $data->primary = $data->primary
-        ->paginate(config('app.rowsPerPage'))->withQueryString();
+            ->paginate(config('app.rowsPerPage'))->withQueryString();
 
         return view(self::resource . '.index', (array) $data);
     }
@@ -88,19 +89,19 @@ class RegisteredUserController extends Controller
             'role_id' => [
                 'integer',
                 'exists:roles,id',
-                Rule::requiredIf(fn() => $isByAdmin)
+                Rule::requiredIf(fn () => $isByAdmin)
             ],
         ]);
 
         $avatarPath = null;
 
-        if(isset($request->avatar)) {
+        if (isset($request->avatar)) {
             $avatarPath = $request->file('avatar')->store('avatars');
         }
 
         $roleId = Role::where('name', 'Standard User')->first()->id;
 
-        if($isByAdmin) {
+        if ($isByAdmin) {
             $roleId = $request->role_id;
         }
 
@@ -115,18 +116,18 @@ class RegisteredUserController extends Controller
 
         event(new Registered($primary));
 
-        if($isByAdmin)
-        return redirect(route(self::resource . '.index'))
-        ->with('message', (object) [
-            'type' => 'success',
-            'content' => str(self::resource)->singular()->title() . ' created.'
-        ]);
+        if ($isByAdmin)
+            return redirect(route(self::resource . '.index'))
+                ->with('message', (object) [
+                    'type' => 'success',
+                    'content' => str(self::resource)->singular()->title() . ' created.'
+                ]);
 
         Auth::login($primary);
 
         return redirect(RouteServiceProvider::HOME);
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -151,12 +152,23 @@ class RegisteredUserController extends Controller
 
         return view(self::resource . '.edit', (array) $data);
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user) {
+    public function update(Request $request, User $user)
+    {
         $primary = $user;
+
+        if ($request->method === 'removeAvatar') {
+            $primary->update(['avatar' => null]);
+
+            return redirect()->back()
+                ->with('message', (object) [
+                    'type' => 'success',
+                    'content' => 'Avatar deleted.'
+                ]);
+        }
 
         $validated = (object) $request->validate([
             'name' => 'required|max:255',
@@ -165,7 +177,7 @@ class RegisteredUserController extends Controller
             'password' => 'nullable|max:255|confirmed',
             'role_id' => 'required|integer|exists:roles,id',
             'avatar' => 'nullable|image|max:10240',
-            'suspended_until_date'=> [
+            'suspended_until_date' => [
                 'nullable',
                 'date',
                 Rule::requiredIf(fn () => !empty($request->suspended_until_time))
@@ -175,7 +187,7 @@ class RegisteredUserController extends Controller
 
         $primary->name = $validated->name;
 
-        if($validated->username != $primary->username) {
+        if ($validated->username != $primary->username) {
             $request->validate([
                 'username' => 'unique:users',
             ]);
@@ -183,7 +195,7 @@ class RegisteredUserController extends Controller
             $primary->username = $validated->username;
         }
 
-        if($validated->email != $primary->email) {
+        if ($validated->email != $primary->email) {
             $request->validate([
                 'email' => 'unique:users',
             ]);
@@ -194,30 +206,30 @@ class RegisteredUserController extends Controller
         $primary->role_id = $validated->role_id;
 
         $primary->suspended_until
-        = !$validated->suspended_until_date
-        ? null
-        : $validated->suspended_until_date
-        . ' ' . ($validated->suspended_until_time ?: '00:00:00');
+            = !$validated->suspended_until_date
+            ? null
+            : $validated->suspended_until_date
+            . ' ' . ($validated->suspended_until_time ?: '00:00:00');
 
-        if(isset($validated->avatar)) {
+        if (isset($validated->avatar)) {
             Storage::delete($primary->avatar ?: '');
-            
+
             $avatarPath = $request->file('avatar')->store('avatars');
-            
+
             $primary->avatar = $avatarPath;
         }
 
-        if(isset($validated->password)) {
+        if (isset($validated->password)) {
             $primary->password = Hash::make($validated->password);
         }
 
         $primary->save();
 
         return redirect()->back()
-        ->with('message', (object) [
-            'type' => 'success',
-            'content' => str(self::resource)->singular()->title() . ' updated.'
-        ]);
+            ->with('message', (object) [
+                'type' => 'success',
+                'content' => str(self::resource)->singular()->title() . ' updated.'
+            ]);
     }
 
     /**
@@ -243,12 +255,12 @@ class RegisteredUserController extends Controller
     {
         $primary = $user;
 
-        if($primary->id == Auth::id())
-        return redirect(route(self::resource . '.index'))
-        ->with('message', (object) [
-            'type' => 'warning',
-            'content' => 'Cannot delete as the same user.',
-        ]);
+        if ($primary->id == Auth::id())
+            return redirect(route(self::resource . '.index'))
+                ->with('message', (object) [
+                    'type' => 'warning',
+                    'content' => 'Cannot delete as the same user.',
+                ]);
 
         Storage::delete($primary->avatar ?: '');
 
@@ -257,23 +269,57 @@ class RegisteredUserController extends Controller
         $primary->delete();
 
         return redirect(route(self::resource . '.index'))
-        ->with('message', (object) [
-            'type' => 'success',
-            'content' => str(self::resource)->singular()->title() . ' deleted.'
-        ]);
+            ->with('message', (object) [
+                'type' => 'success',
+                'content' => str(self::resource)->singular()->title() . ' deleted.'
+            ]);
+    }
+
+    public function deleteAvatar(User $user)
+    {
+        $primary = $user;
+
+        $data = (object) [
+            'resource' => self::resource,
+            'primary' => $primary,
+            'title' => 'Delete avatar',
+        ];
+
+        return view(self::resource . '.delete-avatar', (array) $data);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroyAvatar(User $user, Request $request)
+    {
+        $primary = $user;
+
+        Storage::delete($primary->avatar ?: '');
+
+        $primary->update(['avatar' => null]);
+
+        return redirect($request->redirectTo ?: route(
+            self::resource . '.edit',
+            [Str::singular(self::resource) => $primary]
+            ))->with('message', (object) [
+                'type' => 'success',
+                'content' => 'Avatar deleted.'
+            ]);
     }
 
     /**
      * Show the form for editing the preferences for the listing of the resource.
      */
-    public function preferences() {
+    public function preferences()
+    {
         $data = (object) [
             'resource' => self::resource,
             'title' => str(self::resource)->title() . ' preferences',
             'primary' => Schema::getColumnListing(self::resource),
         ];
 
-        $data->primary = collect($data->primary)->map(function($element) {
+        $data->primary = collect($data->primary)->map(function ($element) {
             return (object) [
                 'value' => $element,
                 'label' => str($element)->headline(),
@@ -281,39 +327,41 @@ class RegisteredUserController extends Controller
         });
 
         $data->secondary = Role::all();
-        
+
         return view(self::resource . '.preferences', (array) $data);
     }
 
     /**
      * Update the preferences for the listing of the resource in storage.
      */
-    public function applyPreferences(Request $request) {
+    public function applyPreferences(Request $request)
+    {
         $validated = (object) $request->validate([
             'order_column' => 'required|max:255',
             'order_direction' => 'required|max:255',
             'role_id' => ['nullable', Rule::in(Role::pluck('id'))]
         ]);
 
-        foreach([
+        foreach ([
             [self::resource . '.order.column' => $validated->order_column],
             [self::resource . '.order.direction' => $validated->order_direction],
             [self::resource . '.filters.role_id' => $validated->role_id],
         ] as $preference) {
             preference($preference);
         }
-        
+
         return redirect(route(self::resource . '.index'))
-        ->with('message', (object) [
-            'type' => 'success',
-            'content' => 'Preferences updated.'
-        ]);
+            ->with('message', (object) [
+                'type' => 'success',
+                'content' => 'Preferences updated.'
+            ]);
     }
 
     /**
      * Show the form for searching the resource.
      */
-    public function search() {
+    public function search()
+    {
         $data = (object) [
             'resource' => self::resource,
             'title' => 'Search ' . str(self::resource)->title()->lower()

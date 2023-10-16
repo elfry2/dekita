@@ -28,7 +28,7 @@
                             {{ $title }}</span></span></h5>
                     <div class="btn invisible"><i class="bi-moon"></i></div>
                 </div>
-                <div class="mt-3">
+                <div class="mt-2">
                     <div class="d-flex align-items-center">
                         <b>Folders</b>
                         <a href="{{ route('folders.create') }}" class="ms-auto btn" title="Create new folder"><i class="bi-plus-lg"></i></a>

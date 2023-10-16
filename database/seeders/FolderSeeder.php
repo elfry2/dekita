@@ -15,7 +15,7 @@ class FolderSeeder extends Seeder
     {
         Folder::create([
             'name' => 'College',
-            'description' => 'Assignments for each subject',
+            'description' => 'Assignments and whatnot',
             'user_id' => 1,
         ]);
     }

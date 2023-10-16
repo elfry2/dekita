@@ -57,6 +57,8 @@ Route::middleware(['auth', 'notSuspended'])->group(function () {
     Route::resource('tasks', TaskController::class);
     
     Route::middleware('admin')->group(function() {
+        Route::get('users/{user}/deleteAvatar', [RegisteredUserController::class, 'deleteAvatar'])->name('users.deleteAvatar');
+        Route::post('users/{user}/destroyAvatar', [RegisteredUserController::class, 'destroyAvatar'])->name('users.destroyAvatar');
         Route::get('users/{user}/delete', [RegisteredUserController::class, 'delete'])->name('users.delete');
         Route::get('users/search', [RegisteredUserController::class, 'search'])->name('users.search');
         Route::get('users/preferences', [RegisteredUserController::class, 'preferences'])->name('users.preferences');
