@@ -2,7 +2,7 @@
 @section('topnav')
     <form action="{{ route('preference.store') }}" method="post">
         @csrf
-        {{-- <input type="hidden" name="redirectTo" value="{{ route($resource . '.index') }}"> --}}
+        <input type="hidden" name="redirectTo" value="{{ route($resource . '.index') }}">
         <input type="hidden" name="key" value="{{ $resource }}.filters.completionStatus">
         <div class="btn-group" role="group" aria-label="Basic outlined example">
             <button type="submit" name="value" value="0"
@@ -23,7 +23,7 @@
                 <a href="{{ route($resource . '.edit', [Str::singular($resource) => $row]) }}"
                     class="list-group-item list-group-item-action d-flex align-items-center">
                     <div class="my-2 flex-grow-1">
-                        <small class="text-{{ $row->is_completed ? 'success' : (strtotime($row->due_date) - strtotime('Today') < 0 ? 'danger' : 'secondary')  }}">{{ date_format(date_create($row->due_date), 'Y/m/d H:i:s') }}</small>
+                        <small class="text-{{ $row->is_completed ? 'success' : (strtotime($row->due_date) - strtotime('Today') < 0 ? 'danger' : 'secondary')  }}"><span title="{{ date_format(date_create($row->due_date), 'Y/m/d H:i:s') }}">{{ \Illuminate\Support\Carbon::parse($row->due_date)->diffForHumans() }}</span></small>
                         <h5 class="m-0">{{ str($row->title)->limit(100) }}</h5>
                         {{-- @if ($row->content)
                             <p class="m-0">{{ str($row->content)->limit(128) }}</p>

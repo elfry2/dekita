@@ -26,7 +26,7 @@ class TaskController extends Controller
             'primary'
             => (new $primary)->orderBy(
                 preference(self::resource . '.order.column', 'due_date'),
-                preference(self::resource . '.order.direction', 'DESC')
+                preference(self::resource . '.order.direction', 'ASC')
             ),
         ];
 
