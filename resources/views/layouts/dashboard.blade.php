@@ -109,8 +109,8 @@
                 <!-- END sidenav -->
 
             </div>
-            <div class="col-sm" id="content">
-                <div class="mt-2 d-flex align-items-center overflow-auto" id="topnav">
+            <div class="col-sm p-0" id="content">
+                <div class="ps-2 mt-2 d-flex align-items-center overflow-auto" id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
                     <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
                     <div class="ms-2"></div>
@@ -119,12 +119,12 @@
                     @include('components.creation-button')
                     @include('components.pagination-buttons')
                 </div>
-                <div class="mt-2" id="content">
+                <div class="mt-2 px-2" id="content">
                     @include('components.messages')
                     @include('components.search-text')
                     @yield('content')
                 </div>
-                <div class="mt-2 d-flex align-items-center justify-content-end position-sticky overflow-auto"
+                <div class="ps-2 mt-2 d-flex align-items-center justify-content-end position-sticky overflow-auto"
                     id="bottomnav">
                     @yield('bottomnav')
                     @include('components.pagination-buttons')
