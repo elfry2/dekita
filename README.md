@@ -1,5 +1,5 @@
 # todo
-A to-do list app written in Laravel 10 (which I use as a template for my other Laravel projects). Work in progress.
+A to-do list app written in Laravel 10, which I use as a template for my other Laravel projects. Work in progress.
 
 ![A screenshot of task list](public/images/Screenshot%20from%202023-10-22%2022-48-23.png "A screenshot of task list")
 ## Installation
