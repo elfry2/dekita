@@ -33,30 +33,30 @@ class RegisteredUserController extends Controller
             'resource' => self::resource,
             'title' => str(self::resource)->title(),
             'primary'
-            => (new $primary)
-                ->orderBy(
-                    preference(self::resource . '.order.column', 'id'),
-                    preference(self::resource . '.order.direction', 'ASC')
-                ),
+            => (new $primary)->orderBy(
+                preference(self::resource . '.order.column', 'id'),
+                preference(self::resource . '.order.direction', 'ASC')
+            ),
         ];
 
         if (!empty(request('q'))) {
             $data->primary
-                = $data->primary->where('name', 'like', '%' . request('q') . '%')
-                ->orWhere('username', 'like', '%' . request('q') . '%')
-                ->orWhere('email', 'like', '%' . request('q') . '%');
+            = $data->primary->where('name', 'like', '%' . request('q') . '%')
+            // ->orWhere('username', 'like', '%' . request('q') . '%')
+            // ->orWhere('email', 'like', '%' . request('q') . '%')
+            ;
         }
 
-        if (!empty(preference(self::resource . '.filters.role_id'))) {
+        if (!empty(preference(self::resource . '.filters.roleId'))) {
             $data->primary
-                = $data->primary->where(
-                    'role_id',
-                    preference(self::resource . '.filters.role_id')
-                );
+            = $data->primary->where(
+                'role_id',
+                preference(self::resource . '.filters.roleId')
+            );
         }
 
         $data->primary = $data->primary
-            ->paginate(config('app.rowsPerPage'))->withQueryString();
+        ->paginate(config('app.rowsPerPage'))->withQueryString();
 
         return view(self::resource . '.index', (array) $data);
     }
@@ -345,7 +345,7 @@ class RegisteredUserController extends Controller
         foreach ([
             [self::resource . '.order.column' => $validated->order_column],
             [self::resource . '.order.direction' => $validated->order_direction],
-            [self::resource . '.filters.role_id' => $validated->role_id],
+            [self::resource . '.filters.roleId' => $validated->role_id],
         ] as $preference) {
             preference($preference);
         }

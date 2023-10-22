@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
 @section('topnav')
+@include('components.preferences-button')
 @endsection
 @section('bottomnav')
 @endsection

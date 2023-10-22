@@ -36,16 +36,18 @@
                     <div class="list-group">
                         <form action="{{ route('preference.store') }}" method="post">
                             @csrf
+                            <input type="hidden" name="redirectTo" value="{{ route('tasks.index') }}">
                             <input type="hidden" name="key" value="currentFolderId">
                             <button type="submit" name="value" value="" title="The default folder"
-                                class="list-group-item list-group-item-action border-0 rounded">General</button>
+                                class="list-group-item list-group-item-action border-0 rounded @if(Route::is('tasks.*') && empty(preference('currentFolderId'))) bg-body-secondary @endif">General</button>
                         </form>
-                        @foreach ((new \App\Models\Folder)->orderBy('name', 'ASC')->get() as $item)
+                        @foreach ((new \App\Models\Folder)->where('user_id', Auth::id())->orderBy('name', 'ASC')->get() as $item)
                         <form action="{{ route('preference.store') }}" method="post">
                             @csrf
+                            <input type="hidden" name="redirectTo" value="{{ route('tasks.index') }}">
                             <input type="hidden" name="key" value="currentFolderId">
                             <button type="submit" name="value" value="{{ $item->id }}" title="{{ $item->description ?? '' }}"
-                                class="list-group-item list-group-item-action border-0 py-0 pe-0 rounded">
+                                class="list-group-item list-group-item-action border-0 py-0 pe-0 rounded @if(Route::is('tasks.*') && preference('currentFolderId') == $item->id) bg-body-secondary @endif">
                                 <div class="d-flex align-items-center">
                                     <span class="flex-grow-1">{{ $item->name }}</span>
                                     <div class="dropdown">
@@ -111,10 +113,10 @@
                 <div class="mt-2 d-flex align-items-center overflow-auto" id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
                     <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
+                    <div class="ms-2"></div>
                     @yield('topnav')
                     @include('components.search')
                     @include('components.creation-button')
-                    @include('components.preferences-button')
                     @include('components.pagination-buttons')
                 </div>
                 <div class="mt-2" id="content">
@@ -127,7 +129,8 @@
                     @yield('bottomnav')
                     @include('components.pagination-buttons')
                 </div>
-                <div class="mt-2"></div>
+                <div class="mt-2 hide-on-small-screens"></div>
+                <div class="hide-on-big-screens" style="height: 6em"></div>
             </div>
         </div>
     </div>
