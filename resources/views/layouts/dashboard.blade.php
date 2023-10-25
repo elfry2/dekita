@@ -119,7 +119,7 @@
 
             </div>
             <div class="col-sm">
-                <div class="py-2 d-flex align-items-center overflow-auto sticky-top bg{{ preference('theme', 'light') == 'light' ? 'white' : 'dark' }}"
+                <div class="py-2 d-flex align-items-center overflow-auto sticky-top bg-{{ preference('theme', 'light') == 'light' ? 'white' : 'dark' }}"
                     id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
                     <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
