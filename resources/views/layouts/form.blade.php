@@ -13,12 +13,14 @@
 </head>
 
 <body>
-    <div class="container-fluid mx-auto" style="max-width: 32em">
-        <div class="d-flex py-2 align-items-center sticky-top bg-white">
+    <div class="p-2 sticky-top bg-white">
+        <div class="d-flex align-items-center mx-auto" style="max-width: 32em">
             <a href="{{ request('back') ?? url()->previous() }}" class="btn" title="Go back"><i
                     class="bi-chevron-left"></i></a>
             <h5 class="m-0 ms-2">{{ $title ?? '' }}</h5>
         </div>
+    </div>
+    <div class="container-fluid mx-auto" style="max-width: 32em">
         <div class="mt-3">
             @include('components.messages')
             @yield('content')
