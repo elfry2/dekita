@@ -25,8 +25,8 @@
                             @include('components.sidenav-visibility-toggle-button')
                         </span>
                         <h5 onclick="window.location.href = '{{ route('home.index') }}'" class="m-0">
-                            {{ config('app.name') }} <span class="hide-on-big-screens"><i class="bi-chevron-right fs-6"></i>
-                                {{ $title }}</span></span></h5>
+                            {{ config('app.name') }}
+                        </h5>
                         <div class="btn invisible"><i class="bi-moon"></i></div>
                     </div>
                     <div class="mt-2">
