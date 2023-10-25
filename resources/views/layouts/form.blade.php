@@ -14,18 +14,16 @@
 
 <body>
     <div class="container-fluid mx-auto" style="max-width: 32em">
-        <div class="row">
-            <div class="col">
-                <div class="d-flex mt-2 align-items-center">
-                    <a href="{{ request('back') ?? url()->previous() }}" class="btn" title="Go back"><i class="bi-chevron-left"></i></a>
-                    <h5 class="m-0 ms-2">{{ $title ?? '' }}</h5>
-                </div>
-                <div class="mt-3 mb-5">
-                    @include('components.messages')
-                    @yield('content')
-                </div>
-            </div>
+        <div class="d-flex py-2 align-items-center sticky-top bg-white">
+            <a href="{{ request('back') ?? url()->previous() }}" class="btn" title="Go back"><i
+                    class="bi-chevron-left"></i></a>
+            <h5 class="m-0 ms-2">{{ $title ?? '' }}</h5>
         </div>
+        <div class="mt-3">
+            @include('components.messages')
+            @yield('content')
+        </div>
+        <div class="py-5"></div>
     </div>
     <script src="/packages/bootstrap-5.3.1-dist/js/bootstrap.bundle.min.js"></script>
 </body>
