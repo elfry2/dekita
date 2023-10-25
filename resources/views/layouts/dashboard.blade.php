@@ -15,11 +15,11 @@
 <body>
     <div class="container-fluid h-100">
         <div class="row h-100">
-            <div class="col-sm-2 sticky-top d-{{ preference('sidenav.display') }}" id="sidenav">
+            <div class="col-sm-2 d-{{ preference('sidenav.display') }}" id="sidenav">
 
                 <!-- BEGIN sidenav -->
 
-                <div class="sticky-top pt-2">
+                <div class="sticky-top pt-2 bg-white"">
                     <div class="d-flex align-items-center">
                         <span class="hide-on-big-screens me-2">
                             @include('components.sidenav-visibility-toggle-button')
@@ -111,8 +111,8 @@
                 <!-- END sidenav -->
 
             </div>
-            <div class="col-sm p-0" id="content">
-                <div class="ps-2 py-2 d-flex align-items-center overflow-auto sticky-top bg-white" id="topnav">
+            <div class="col-sm" id="content">
+                <div class="py-2 d-flex align-items-center overflow-auto sticky-top bg-white" id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
                     <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
                     <div class="ms-2"></div>
@@ -122,12 +122,12 @@
                     @include('components.creation-button')
                     @include('components.pagination-buttons')
                 </div>
-                <div class="mt-2 px-2" id="content">
+                <div class="mt-2" id="content">
                     @include('components.messages')
                     @include('components.search-text')
                     @yield('content')
                 </div>
-                <div class="ps-2 mt-2 d-flex align-items-center justify-content-end position-sticky overflow-auto"
+                <div class="mt-2 d-flex align-items-center justify-content-end position-sticky overflow-auto"
                     id="bottomnav">
                     @yield('bottomnav')
                     @include('components.pagination-buttons')
