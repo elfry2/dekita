@@ -6,9 +6,9 @@
         <input type="hidden" name="key" value="{{ $resource }}.filters.completionStatus">
         <div class="btn-group" role="group" aria-label="Basic outlined example">
             <button type="submit" name="value" value="0"
-                class="btn {{ !preference($resource . '.filters.completionStatus') ? 'btn-' . (preference('theme', 'light') == 'light' ? 'dark' : 'light') : 'border-secondary' }}"><i class="hide-on-big-screens bi-square"></i><span class="hide-on-small-screens">Uncompleted</span></button>
+                class="btn border-secondary @if(!preference($resource . '.filters.completionStatus')) bg-{{  (preference('theme', 'light') == 'light' ? 'dark text-light' : 'body-secondary') }} @endif"><i class="hide-on-big-screens bi-square"></i><span class="hide-on-small-screens">Uncompleted</span></button>
             <button type="submit" name="value" value="1"
-                class="btn {{ preference($resource . '.filters.completionStatus') ? 'btn-' . (preference('theme', 'light') == 'light' ? 'dark' : 'light') : 'border-secondary' }}"><i class="hide-on-big-screens bi-check-lg"></i><span class="hide-on-small-screens">Completed</span></button>
+                class="btn border-secondary @if(preference($resource . '.filters.completionStatus')) bg-{{  (preference('theme', 'light') == 'light' ? 'dark text-light' : 'body-secondary') }} @endif"><i class="hide-on-big-screens bi-check-lg"></i><span class="hide-on-small-screens">Completed</span></button>
         </div>
     </form>
 @endsection
