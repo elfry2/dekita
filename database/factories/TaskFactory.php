@@ -17,7 +17,7 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->realText(48),
+            'title' => fake()->realText(),
             'content' => fake()->realText(),
             'is_completed' => (boolean) rand(0, 1),
             'due_date'

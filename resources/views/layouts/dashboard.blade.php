@@ -32,7 +32,8 @@
                     <div class="mt-2">
                         <div class="d-flex align-items-center">
                             <b>Folders</b>
-                            <a href="{{ route('folders.create') }}" class="ms-auto btn" title="Create new folder"><i class="bi-plus-lg"></i></a>
+                            <a href="{{ route('folders.create') }}" class="ms-auto btn" title="Create new folder"><i
+                                    class="bi-plus-lg"></i></a>
                         </div>
                         <div class="list-group">
                             <form action="{{ route('preference.store') }}" method="post">
@@ -40,34 +41,39 @@
                                 <input type="hidden" name="redirectTo" value="{{ route('tasks.index') }}">
                                 <input type="hidden" name="key" value="currentFolderId">
                                 <button type="submit" name="value" value="" title="The default folder"
-                                    class="list-group-item list-group-item-action border-0 rounded @if(Route::is('tasks.*') && empty(preference('currentFolderId'))) bg-body-secondary @endif">General</button>
+                                    class="list-group-item list-group-item-action border-0 rounded @if (Route::is('tasks.*') && empty(preference('currentFolderId'))) bg-body-secondary @endif">General</button>
                             </form>
-                            @foreach ((new \App\Models\Folder)->where('user_id', Auth::id())->orderBy('name', 'ASC')->get() as $item)
-                            <form action="{{ route('preference.store') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="redirectTo" value="{{ route('tasks.index') }}">
-                                <input type="hidden" name="key" value="currentFolderId">
-                                <button type="submit" name="value" value="{{ $item->id }}" title="{{ $item->description ?? '' }}"
-                                    class="list-group-item list-group-item-action border-0 py-0 pe-0 rounded @if(Route::is('tasks.*') && preference('currentFolderId') == $item->id) bg-body-secondary @endif">
-                                    <div class="d-flex align-items-center">
-                                        <span class="flex-grow-1">{{ $item->name }}</span>
-                                        <div class="dropdown">
-                                            <a href="#" class="btn" data-bs-toggle="dropdown">
-                                                <i class="bi-three-dots-vertical"></i>
-                                            </a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{{ route('folders.edit', ['folder' => $item, 'back' => request()->fullUrl()]) }}"><i class="bi-pencil-square"></i><span
-                                                            class="ms-2">Edit</span></a></li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                <li><a class="dropdown-item" href="{{ route('folders.delete', ['folder' => $item, 'back' => request()->fullUrl()]) }}"><i class="bi-trash"></i><span
-                                                            class="ms-2">Delete</span></a></li>
-                                            </ul>
+                            @foreach ((new \App\Models\Folder())->where('user_id', Auth::id())->orderBy('name', 'ASC')->get() as $item)
+                                <form action="{{ route('preference.store') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="redirectTo" value="{{ route('tasks.index') }}">
+                                    <input type="hidden" name="key" value="currentFolderId">
+                                    <button type="submit" name="value" value="{{ $item->id }}"
+                                        title="{{ $item->description ?? '' }}"
+                                        class="list-group-item list-group-item-action border-0 py-0 pe-0 rounded @if (Route::is('tasks.*') && preference('currentFolderId') == $item->id) bg-body-secondary @endif">
+                                        <div class="d-flex align-items-center">
+                                            <span class="flex-grow-1">{{ $item->name }}</span>
+                                            <div class="dropdown">
+                                                <a href="#" class="btn" data-bs-toggle="dropdown">
+                                                    <i class="bi-three-dots-vertical"></i>
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ route('folders.edit', ['folder' => $item, 'back' => request()->fullUrl()]) }}"><i
+                                                                class="bi-pencil-square"></i><span
+                                                                class="ms-2">Edit</span></a></li>
+                                                    <li>
+                                                        <hr class="dropdown-divider">
+                                                    </li>
+                                                    <li><a class="dropdown-item"
+                                                            href="{{ route('folders.delete', ['folder' => $item, 'back' => request()->fullUrl()]) }}"><i
+                                                                class="bi-trash"></i><span
+                                                                class="ms-2">Delete</span></a></li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                </button>
-                            </form>
+                                    </button>
+                                </form>
                             @endforeach
                         </div>
                     </div>
@@ -101,7 +107,8 @@
                             </a>
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf
-                                <button type="submit" class="list-group-item list-group-item-action border-0 rounded"><i
+                                <button type="submit"
+                                    class="list-group-item list-group-item-action border-0 rounded"><i
                                         class="bi-box-arrow-left"></i><span class="ms-2">Log out</span></button>
                             </form>
                         </div>
@@ -112,7 +119,8 @@
 
             </div>
             <div class="col-sm" id="content">
-                <div class="py-2 d-flex align-items-center overflow-auto sticky-top bg-{{ preference('theme', 'light') }}" id="topnav">
+                <div class="py-2 d-flex align-items-center overflow-auto sticky-top bg-{{ preference('theme', 'light') }}"
+                    id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
                     <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
                     <div class="ms-2"></div>
@@ -122,18 +130,19 @@
                     @include('components.creation-button')
                     @include('components.pagination-buttons')
                 </div>
-                <div class="mt-2" id="content">
+                <div id="content">
                     @include('components.messages')
                     @include('components.search-text')
                     @yield('content')
+
+                    <div class="mt-2 d-flex align-items-center justify-content-end position-sticky overflow-auto"
+                        id="bottomnav">
+                        @yield('bottomnav')
+                        @include('components.pagination-buttons')
+                    </div>
+                    <div class="mt-2 hide-on-small-screens"></div>
+                    <div class="hide-on-big-screens" style="height: 6em"></div>
                 </div>
-                <div class="mt-2 d-flex align-items-center justify-content-end position-sticky overflow-auto"
-                    id="bottomnav">
-                    @yield('bottomnav')
-                    @include('components.pagination-buttons')
-                </div>
-                <div class="mt-2 hide-on-small-screens"></div>
-                <div class="hide-on-big-screens" style="height: 6em"></div>
             </div>
         </div>
     </div>

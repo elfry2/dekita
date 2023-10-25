@@ -11,6 +11,11 @@ body {
 a {
     text-decoration: none;
 }
+
+/** Source: https://stackoverflow.com/questions/22808040/fading-out-text-on-overflow-with-css-if-the-text-is-bigger-than-allowed */
+.fade-on-overflow {
+    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+  }
     
 /* Sources:
 * - https://css-tricks.com/quick-css-trick-how-to-center-an-object-exactly-in-the-center/
