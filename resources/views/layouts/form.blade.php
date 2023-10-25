@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="p-2 sticky-top bg-white">
+    <div class="p-2 sticky-top bg-{{ preference('theme', 'light') }}">
         <div class="d-flex align-items-center mx-auto" style="max-width: 32em">
             <a href="{{ request('back') ?? url()->previous() }}" class="btn" title="Go back"><i
                     class="bi-chevron-left"></i></a>

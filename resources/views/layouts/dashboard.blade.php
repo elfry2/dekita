@@ -19,7 +19,7 @@
 
                 <!-- BEGIN sidenav -->
 
-                <div class="sticky-top pt-2 bg-white"">
+                <div class="sticky-top pt-2 bg-{{ preference('theme', 'light') }}">
                     <div class="d-flex align-items-center">
                         <span class="hide-on-big-screens me-2">
                             @include('components.sidenav-visibility-toggle-button')
@@ -112,7 +112,7 @@
 
             </div>
             <div class="col-sm" id="content">
-                <div class="py-2 d-flex align-items-center overflow-auto sticky-top bg-white" id="topnav">
+                <div class="py-2 d-flex align-items-center overflow-auto sticky-top bg-{{ preference('theme', 'light') }}" id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
                     <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
                     <div class="ms-2"></div>
