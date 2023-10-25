@@ -22,7 +22,7 @@
     @if ($primary->count() == 0)
         @include('components.no-data-text')
     @else
-        <div class="row">
+        <div class="row px-2">
             @foreach ($primary as $item)
                 <div class="col-sm-3 p-1">
                     <div class="list-group">

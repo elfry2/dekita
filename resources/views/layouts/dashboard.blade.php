@@ -118,7 +118,7 @@
                 <!-- END sidenav -->
 
             </div>
-            <div class="col-sm" id="content">
+            <div class="col-sm">
                 <div class="py-2 d-flex align-items-center overflow-auto sticky-top bg-{{ preference('theme', 'light') }}"
                     id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
