@@ -11,4 +11,5 @@ composer update && npm install && npm execute build && php artisan migrate:fresh
 Execute
 ```bash
 php artisan serve
-``` and visit http://localhost:8000 (or whichever port ```artisan``` serves on) on your browser.
+```
+and visit http://localhost:8000 (or whichever port ```artisan``` serves on) on your browser.
