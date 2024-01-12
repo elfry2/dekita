@@ -71,15 +71,3 @@ Route::middleware(['auth', 'notSuspended'])->group(function () {
         Route::resource('users', RegisteredUserController::class)->except('show');
     });
 });
-
-require __DIR__ . "/../helpers/url_update_query_string.php";
-
-Route::get('test', function() {
-
-    $newUrl = url_update_query_string("http://localhost:8000?a=b&c=d#e", [
-        'a' => 999,
-        'q' => 'agus',
-    ]);
-
-    dd($newUrl); // Outputs "http://localhost:8000?a=999&c=d&q=agus#e"
-});

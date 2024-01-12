@@ -24,15 +24,20 @@ function preference(string|array $key, $default = null) {
     }
 
     if(is_array($key)) {
-        $preference = $key;
 
-        if(Auth::id()) Preference::updateOrCreate([
-            'user_id' => Auth::id(),
-            'key' => key($preference)
-        ], [
-            'value' => current($preference)
-        ]);
+        $preferences = $key;
 
-        else session([key($preference) => current($preference)]);
+        foreach($preferences as $key => $value) {
+
+            if(Auth::id()) Preference::updateOrCreate([
+                'user_id' => Auth::id(),
+                'key' => $key
+            ], [
+                'value' => $value
+            ]);
+
+            else session([$key => $value]);
+        }
+
     }
 }

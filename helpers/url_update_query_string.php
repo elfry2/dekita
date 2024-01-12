@@ -1,8 +1,12 @@
 <?php
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Preference;
+
 function url_update_query_string(string $url, array $newQueries) : string {
 
     /**
-     *  If there's no query to update, just return the url right away.
+     *  If there's no query to update, just return the URL right away.
      */
     if(count($newQueries) <= 0) return $url;
 
