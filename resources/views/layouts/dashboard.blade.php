@@ -136,8 +136,10 @@
                     @yield('content')
 
                     <div class="mt-3 d-flex align-items-center justify-content-end position-sticky overflow-auto"
-                        id="bottomnav">
-                        @yield('bottomnav')
+                         id="bottomnav">
+                        @if(!Route::is('tasks.*'))
+                            @yield('bottomnav')
+                        @endif
                         @include('components.pagination-buttons')
                     </div>
                     <div class="mt-2 hide-on-small-screens"></div>

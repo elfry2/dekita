@@ -49,8 +49,8 @@ class FolderController extends Controller
         ]);
 
         preference('currentFolderId', $folder->id);
-        
-        return redirect(route('users.index')) // tasks.index
+
+        return redirect(route('tasks.index'))
         ->with('message', (object) [
             'type' => 'success',
             'content' => str(self::resource)->singular()->title(). ' created.'
@@ -72,6 +72,8 @@ class FolderController extends Controller
     {
         $primary = $folder;
 
+        if($primary->user != Auth::user()) abort(403);
+
         $data = (object) [
             'resource' => self::resource,
             'title' => 'Edit ' . str(self::resource)->title()->singular()->lower(),
@@ -88,6 +90,8 @@ class FolderController extends Controller
     {
         $primary = $folder;
 
+        if($primary->user != Auth::user()) abort(403);
+
         $validated = (object) $request->validate([
             'name' => 'required|max:255',
             'description' => 'max:255',
@@ -100,8 +104,8 @@ class FolderController extends Controller
         $primary->save();
 
         preference('currentFolderId', $folder->id);
-        
-        return redirect(route('users.index')) // tasks.index
+
+        return redirect(route('tasks.index')) // tasks.index
         ->with('message', (object) [
             'type' => 'success',
             'content' => str(self::resource)->singular()->title(). ' updated.'
@@ -135,7 +139,7 @@ class FolderController extends Controller
 
         $primary->delete();
 
-        return redirect(route('users.index')) // tasks.index
+        return redirect(route('tasks.index')) // tasks.index
         ->with('message', (object) [
             'type' => 'success',
             'content' => str(self::resource)->singular()->title(). ' deleted.'

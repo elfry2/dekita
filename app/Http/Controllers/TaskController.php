@@ -57,6 +57,9 @@ class TaskController extends Controller
         ->paginate(config('app.rowsPerPage'))->withQueryString();
 
         if(isset($task)) {
+
+            if($task->user != Auth::user()) abort(403);
+
             $data->secondary = $task;
         }
 
@@ -141,6 +144,8 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $primary = $task;
+
+        if($primary->user != Auth::user()) abort(403);
 
         if ($request->method === 'toggleCompletionStatus') {
             $currentCompletionStatus = $primary->is_completed;

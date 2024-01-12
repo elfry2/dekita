@@ -19,9 +19,6 @@
 @section('bottomnav')
 @endsection
 @section('content')
-@if ($primary->count() == 0)
-@include('components.no-data-text')
-@else
 <div class="row">
     <div class="col-sm-6">
         <div class="rounded border border-bottom-0 table-responsive">
@@ -31,6 +28,11 @@
                     <th>Due date</th>
                     <th>Title</th>
                 </tr>
+                @if ($primary->count() == 0)
+                <tr>
+                    <td class="text-center" colspan="3">No task yet. Let's create one!</td>
+                </tr>
+                @else
                 @foreach ($primary as $row)
                 <tr class="@if(isset($secondary) && $secondary->id == $row->id) fw-bold @endif" id="row{{ $loop->index + 1 }}" style="cursor: pointer" onclick="window.location.href = '{{ route("$resource.edit", [Str::singular($resource) => $row->id]) }}'">
                     <td>
@@ -47,9 +49,9 @@
                     <td>{{ str($row->title)->length > 40 ? str($row->title)->take(40) . '...' : $row->title }}</td>
                 </tr>
                 @endforeach
+            @endif
             </table>
         </div>
-
     </div>
     <div class="col-sm-6">
         <form action="{{ isset($secondary) ? route("$resource.update", [Str::singular($resource) => $secondary]) : route("$resource.store") }}" method="post">
@@ -96,5 +98,4 @@
 
     </div>
 </div>
-@endif
 @endsection

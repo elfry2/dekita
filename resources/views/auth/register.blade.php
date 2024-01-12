@@ -1,6 +1,8 @@
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
-        <a href="{{ request('back') ?? url()->previous() }}" class="btn" title="Go back" style="background-color: white; color: black; padding: 0.33em; padding-left: 0.5em; padding-right: 0.5em; border-radius: 4px">Go back</a>
+        <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ request('back') ?? url()->previous() }}">
+        {{ __('Go back') }}
+        </a>
         @csrf
         <!-- Name -->
         <div class="mt-4">
