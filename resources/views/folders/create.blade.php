@@ -13,7 +13,7 @@
             <label for="descriptionTextInput">Description <span class="text-secondary">(optional)</span></label>
         </div>
         <div class="d-flex justify-content-end mt-3">
-            <button class="btn" type="submit"><i class="bi-plus-lg"></i><span class="ms-2">Create</span></button>
+            <button class="btn border-0 btn-outline-{{ preference('theme') == 'dark' ? 'light' : 'dark' }}" type="submit"><i class="bi-plus-lg"></i><span class="ms-2">Create</span></button>
         </div>
     </form>
 @endsection

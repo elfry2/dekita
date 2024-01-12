@@ -32,7 +32,7 @@
                     <div class="mt-2">
                         <div class="d-flex align-items-center">
                             <b>Folders</b>
-                            <a href="{{ route('folders.create') }}" class="ms-auto btn" title="Create new folder"><i
+                            <a href="{{ route('folders.create') }}" class="ms-auto btn border-0 btn-outline-{{ preference('theme') == 'dark' ? 'light' : 'dark' }}" title="Create new folder"><i
                                     class="bi-plus-lg"></i></a>
                         </div>
                         <div class="list-group">

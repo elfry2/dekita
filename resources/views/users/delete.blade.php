@@ -6,7 +6,7 @@
         @method('delete')
         @csrf
         <div class="d-flex justify-content-end mt-3">
-            <button class="btn text-danger" type="submit"><i class="bi-trash"></i><span class="ms-2">Delete</span></button>
+            <button class="btn border-0 btn-outline-danger" type="submit"><i class="bi-trash"></i><span class="ms-2">Delete</span></button>
         </div>
     </form>
 @endsection
