@@ -16,7 +16,7 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Task $task = null)
     {
         $primary = '\App\Models\\' . str(self::resource)->singular()->title();
 
@@ -54,6 +54,10 @@ class TaskController extends Controller
 
         $data->primary = $data->primary
         ->paginate(config('app.rowsPerPage'))->withQueryString();
+
+        if(isset($task)) {
+            $data->secondary = $task;
+        }
 
         return view(self::resource . '.index', (array) $data);
     }
@@ -193,7 +197,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $primary = $task;
-        
+
         $primary->delete();
 
         return redirect(route(self::resource . '.index'))

@@ -19,7 +19,7 @@
 
                 <!-- BEGIN sidenav -->
 
-                <div class="sticky-top pt-2 bg-{{ preference('theme', 'light') == 'light' ? 'white' : 'dark' }}">
+                <div class="sticky-top mt-3 bg-{{ preference('theme', 'light') == 'light' ? 'white' : 'dark' }}">
                     <div class="d-flex align-items-center">
                         <span class="hide-on-big-screens me-2">
                             @include('components.sidenav-visibility-toggle-button')
@@ -29,7 +29,7 @@
                         </h5>
                         <div class="btn invisible"><i class="bi-moon"></i></div>
                     </div>
-                    <div class="mt-2">
+                    <div class="mt-3">
                         <div class="d-flex align-items-center">
                             <b>Folders</b>
                             <a href="{{ route('folders.create') }}" class="ms-auto btn border-0 btn-outline-{{ preference('theme') == 'dark' ? 'light' : 'dark' }}" title="Create new folder"><i
@@ -119,7 +119,7 @@
 
             </div>
             <div class="col-sm">
-                <div class="py-2 d-flex align-items-center overflow-auto sticky-top bg-{{ preference('theme', 'light') == 'light' ? 'white' : 'dark' }}"
+                <div class="mt-3 d-flex align-items-center overflow-auto sticky-top bg-{{ preference('theme', 'light') == 'light' ? 'white' : 'dark' }}"
                     id="topnav">
                     @include('components.sidenav-visibility-toggle-button')
                     <h5 class="m-0 ms-2 me-auto">{{ $title ?? '' }}</h5>
@@ -130,12 +130,12 @@
                     @include('components.creation-button')
                     @include('components.pagination-buttons')
                 </div>
-                <div id="content">
+                <div class="mt-3" id="content">
                     @include('components.messages')
                     @include('components.search-text')
                     @yield('content')
 
-                    <div class="mt-2 d-flex align-items-center justify-content-end position-sticky overflow-auto"
+                    <div class="mt-3 d-flex align-items-center justify-content-end position-sticky overflow-auto"
                         id="bottomnav">
                         @yield('bottomnav')
                         @include('components.pagination-buttons')
