@@ -53,4 +53,12 @@ class User extends Authenticatable
     public function preferences() {
         return $this->hasMany(Preference::class);
     }
+
+    public function folders() {
+        return $this->hasMany(Folder::class);
+    }
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 }

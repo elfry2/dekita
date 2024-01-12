@@ -43,7 +43,7 @@
                                 <button type="submit" name="value" value="" title="The default folder"
                                     class="list-group-item list-group-item-action border-0 rounded @if (Route::is('tasks.*') && empty(preference('currentFolderId'))) bg-body-secondary @endif">General</button>
                             </form>
-                            @foreach ((new \App\Models\Folder())->where('user_id', Auth::id())->orderBy('name', 'ASC')->get() as $item)
+                            @foreach (Auth::user()->folders()->orderBy('name', 'ASC')->get() as $item)
                                 <form action="{{ route('preference.store') }}" method="post">
                                     @csrf
                                     <input type="hidden" name="redirectTo" value="{{ route('tasks.index') }}">
