@@ -13,6 +13,19 @@ class FolderSeeder extends Seeder
      */
     public function run(): void
     {
-       //
+        $folders = [
+            [
+                'name' => 'College',
+                'description' => 'Assignments go here.',
+                'user_id' => 1,
+            ],
+            [
+                'name' => 'Job',
+                'description' => 'Web-development-related schedules.',
+                'user_id' => 1,
+            ],
+        ];
+
+        foreach($folders as $folder) Folder::create($folder);
     }
 }
