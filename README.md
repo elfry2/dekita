@@ -1,7 +1,8 @@
 # todo
 A to-do list app written in Laravel 10, which I use as a template for my other Laravel projects. Work in progress.
 
-![A screenshot of task list](public/images/screenshot.png "A screenshot of task list")
+![A screenshot of task list](https://github.com/elfry2/todo/assets/47256917/fe7884ea-ead3-464c-9ffe-aaa50561941b "A screenshot of task list")
+
 ## Installation
 1. Create a database
 2. Copy the ```.env.example``` file and rename it to ```.env```
