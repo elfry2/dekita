@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title');
-            $table->text('content');
-            $table->timestamp('due_date');
-            $table->boolean('is_completed');
+            $table->text('content')->nullable();
+            $table->timestamp('due_date')->nullable();
+            $table->boolean('is_completed')->default(false);
             $table->foreignId('user_id')->constrained();
             $table->foreignId('folder_id')->nullable()->constrained();
         });

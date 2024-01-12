@@ -58,8 +58,8 @@ Route::middleware(['auth', 'notSuspended'])->group(function () {
     Route::get('tasks/search', [TaskController::class, 'search'])->name('tasks.search');
     Route::get('tasks/preferences', [TaskController::class, 'preferences'])->name('tasks.preferences');
     Route::post('tasks/preferences', [TaskController::class, 'applyPreferences'])->name('tasks.applyPreferences');
-    Route::resource('tasks', TaskController::class)->except('show');
-    Route::get('tasks/{task}', [TaskController::class, 'index'])->name('tasks.show');
+    Route::resource('tasks', TaskController::class)->except('edit');
+    Route::get('tasks/{task}/edit', [TaskController::class, 'index'])->name('tasks.edit');
 
     Route::middleware('admin')->group(function() {
 

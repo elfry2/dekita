@@ -13,10 +13,6 @@ class FolderSeeder extends Seeder
      */
     public function run(): void
     {
-        Folder::create([
-            'name' => 'College',
-            'description' => 'Assignments and whatnot',
-            'user_id' => 1,
-        ]);
+       //
     }
 }

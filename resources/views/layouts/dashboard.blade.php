@@ -127,7 +127,7 @@
                     @include('components.search')
                     <div class="ms-2"></div>
                     @yield('topnav')
-                    @include('components.creation-button')
+                    @include('components.' . (Route::is('tasks.*') ? 'task-' : '') . 'creation-button')
                     @include('components.pagination-buttons')
                 </div>
                 <div class="mt-3" id="content">

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Folder;
-use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use App\Models\Folder;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
@@ -77,27 +78,34 @@ class TaskController extends Controller
     {
         $validated = (object) $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'text',
+            'content' => 'nullable|string',
             'due_date' => [
                 'nullable',
                 'date',
                 Rule::requiredIf(fn () => !empty($request->due_time))
             ],
             'due_time' => 'nullable|max:9',
-            'is_completed' => 'required|boolean',
         ]);
 
-        Task::create([
-            'title' => $validated->name,
-            'content' => $validated->email,
-            'due_date' => $validated->due_date . ' ' . $validated->due_time,
-            'is_completed' => $validated->is_completed,
-            'user_id' => Auth::id(),
+        $validated->due_date
+            = isset($validated->due_date) ? $validated->due_date : null;
+
+        if(isset($validated->due_date))
+            $validated->due_date
+            .= ' ' . (isset($validated->due_time) ? $validated->due_time : '23:59:59');
+
+       $task = Task::create([
+            'title' => $validated->title,
+            'content' => $validated->content,
+            'due_date' => $validated->due_date ?: null,
             'folder_id' => preference('currentFolderId'),
+            'user_id' => Auth::id(),
         ]);
 
-        return redirect(route(self::resource . '.index'))
-        ->with('message', (object) [
+        return redirect(route(
+            self::resource . '.edit',
+            [Str::singular(self::resource) => $task]
+        ))->with('message', (object) [
             'type' => 'success',
             'content' => str(self::resource)->singular()->title() . ' created.'
         ]);
@@ -149,27 +157,35 @@ class TaskController extends Controller
 
         $validated = (object) $request->validate([
             'title' => 'required|string|max:255',
-            'content' => 'text',
+            'content' => 'nullable|string',
             'due_date' => [
                 'nullable',
                 'date',
                 Rule::requiredIf(fn () => !empty($request->due_time))
             ],
             'due_time' => 'nullable|max:9',
-            'is_completed' => 'required|boolean',
             'folder_id' => 'integer|exists:folders,id'
         ]);
 
+        $validated->due_date
+            = isset($validated->due_date) ? $validated->due_date : null;
+
+        if(isset($validated->due_date))
+            $validated->due_date
+            .= ' ' . (isset($validated->due_time) ? $validated->due_time : '23:59:59');
+
         $primary->update([
-            'title' => $validated->name,
-            'content' => $validated->email,
-            'due_date' => $validated->due_date . ' ' . $validated->due_time,
-            'is_completed' => $validated->is_completed,
-            'folder_id' => $validated->folder_id,
+            'title' => $validated->title,
+            'content' => $validated->content,
+            'due_date' => $validated->due_date ?: null,
+            'folder_id' => preference('currentFolderId'),
+            'user_id' => Auth::id(),
         ]);
 
-        return redirect(route(self::resource . '.index'))
-        ->with('message', (object) [
+        return redirect(route(
+            self::resource . '.edit',
+            [Str::singular(self::resource) => $task]
+        ))->with('message', (object) [
             'type' => 'success',
             'content' => str(self::resource)->singular()->title() . ' updated.'
         ]);
