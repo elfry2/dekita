@@ -28,7 +28,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "helpers/preference.php"
+            "helpers/preference.php",
+            "helpers/url_update_query_string.php"
         ]
     },
     "autoload-dev": {

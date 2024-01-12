@@ -1,12 +1,12 @@
 <?php
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Preference;
-use Illuminate\Database\Eloquent\Collection;
 
 function preference(string|array $key, $default = null) {
     if(is_string($key)) {
         $preference = null;
-        
+
         if(Auth::id()) {
             $preference = Preference::where('user_id', Auth::id())
             ->where('key', $key)
