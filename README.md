@@ -11,11 +11,11 @@ A to-do list app written in Laravel 10, which I use as a template for my other L
 3. Edit the ```.env``` file to match your environment configuration
 4. Execute
 ```bash
-composer update && \
-npm install && \
-npm run build && \
-php artisan migrate:fresh --seed && \
-php artisan key:generate && \
+composer update
+npm install
+npm run build
+php artisan migrate:fresh --seed
+php artisan key:generate
 php artisan storage:link
 ```
 ## Usage
