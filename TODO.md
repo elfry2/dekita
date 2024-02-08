@@ -9,3 +9,4 @@
 - [ ] Consider not using resource routes for better control
 - [ ] Change preferences layouts top margin to mt-3
 - [ ] Simplify the updating of preferences in the applyPreferences method of each controller
+- [ ] Make preferences save button has background color on hover
