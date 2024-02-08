@@ -8,3 +8,4 @@
 - [ ] Show search field when there's no data but query is set
 - [ ] Consider not using resource routes for better control
 - [ ] Change preferences layouts top margin to mt-3
+- [ ] Simplify the updating of preferences in the applyPreferences method of each controller
