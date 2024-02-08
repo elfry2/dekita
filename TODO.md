@@ -5,4 +5,4 @@
 - [ ] Use controller-wide resource parameter
 - [ ] Use controller-wide validation rules
 - [ ] Use controller-wide query column names array
-- [ ] Consider not using resource routes
+- [ ] Consider not using resource routes for better control
