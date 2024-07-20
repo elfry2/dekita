@@ -1,7 +1,7 @@
-# todo
+# shigoto
 A to-do list app written in Laravel 10, which I use as a template for my other Laravel projects.
 
-![A screenshot of task list](https://github.com/elfry2/todo/assets/47256917/271355bd-d927-471e-bfa4-a1b33d9b8e50 "A screenshot of task list")
+![A screenshot of task list](https://github.com/elfry2/shigoto/assets/47256917/271355bd-d927-471e-bfa4-a1b33d9b8e50 "A screenshot of task list")
 
 
 
